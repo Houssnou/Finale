@@ -53,33 +53,24 @@ module.exports = function(sequelize, DataTypes) {
     console.log(user);
   });
 
-  //defining the association of the users and journals
+    //defining the association of the users and Reviews
   Users.associate = models =>{
-    // Associating Users with Journals
-    // When a user is deleted, also delete any associated Journals
-    Users.hasMany(models.Journals, {
-      onDelete: "cascade"
-    });  
-  };
-
-  //defining the association of the users and entries  // but not sure will need it but good to know that it's there
-  Users.associate = models =>{
-    // Associating Users with Journals
-    // When a user is deleted, also delete any associated Journals
+    // Associating Users with Reviews
+    // When a user is deleted, also delete any associated Reviews
     Users.hasMany(models.Reviews, {
       onDelete: "cascade"
     });  
   };
   Users.associate = models =>{
-    // Associating Users with Journals
-    // When a user is deleted, also delete any associated Journals
+    // Associating Users with Comments
+    // When a user is deleted, also delete any associated Comments
     Users.hasMany(models.Comments, {
       onDelete: "cascade"
     });  
   };
   Users.associate = models =>{
-    // Associating Users with Journals
-    // When a user is deleted, also delete any associated Journals
+    // Associating Users with Reviews
+    // When a user is deleted, also delete any associated Reviews
     Users.hasMany(models.Photos, {
       onDelete: "cascade"
     });  

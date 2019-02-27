@@ -1,8 +1,12 @@
-{
+//import dotenv dependencies
+require("dotenv").config();
+
+//import the old json 
+module.exports={  
   "development": {
     "username": "root",
-    "password": null,
-    "database": "database_development",
+    "password": process.env.MYSQL_PASSWORD,
+    "database": process.env.MYSQL_DATABASE,
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
@@ -14,10 +18,7 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
+    "use_env_variable":"JAWSDB_URL",
     "dialect": "mysql"
   }
 }

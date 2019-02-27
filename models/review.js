@@ -1,4 +1,4 @@
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Reviews = sequelize.define("Reviews", {
     title: {
       type: DataTypes.STRING,
@@ -26,19 +26,23 @@ module.exports = function(sequelize, DataTypes) {
     }
   });
 
-  //defining the association of the Reviews and entries
+  //backward relation btw Reviews and Places  
   Reviews.associate = models => {
     // Associating Users with Reviews
     // When a user is deleted, also delete any associated Reviews
     Reviews.hasMany(models.Comments, {
       onDelete: "cascade"
-    });  
-  };
+    });
+    // A review belongs to a palce
+    // and can't be created without an place id associate as the foreign key constraint
+    Reviews.belongsTo(models.Places, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
 
-  //backward relation btw Reviews and users
-  Reviews.associate = models=> {
-    // A Journal belongs to an user
-    // and can't be created without an users id associate as the foreign key constraint
+    // A review belongs to a user
+    // and can't be created without an user id associate as the foreign key constraint
     Reviews.belongsTo(models.Users, {
       foreignKey: {
         allowNull: false
@@ -46,5 +50,5 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-    return Reviews;
+  return Reviews;
 };

@@ -20,7 +20,7 @@ module.exports = {
     db
       .Places
       .findAll({
-        include: [db.Reviews,db.Photos]
+        include: [db.Reviews, db.Photos]
       })
       .then(dbPlaces => {
         res.json(dbPlaces);
@@ -30,7 +30,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
-  //select all places 
+  //select a specific place 
   getOnePlace: (req, res) => {
     db
       .Places
@@ -38,7 +38,7 @@ module.exports = {
         where: {
           fullName: req.params.fullName
         },
-        include: [db.Reviews,db.Photos]
+        include: [db.Reviews, db.Photos]
       })
       .then(dbPlaces => {
         res.json(dbPlaces);
@@ -48,6 +48,9 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+  //get a place by location
+  //get a place by city
+  //get a place by state
   //update a place info 
   updatePlace: (req, res) => {
     db
@@ -63,6 +66,5 @@ module.exports = {
         console.log("Place Update Error: " + err);
         res.status(400).json(err);
       });
-  },
-
+  }
 }

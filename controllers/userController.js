@@ -114,28 +114,6 @@ module.exports = {
       });
   },
 
-  //Change password
-  ChangePassword: (req, res) => {
-    // console.log(req.body);
-     db.Users.update(req.body, {
-         where: {
-           id: req.params.id
-         }
-       }).then(result => {
-         return db.Users.findById(req.params.id)
-       })
-       .then(result => {
-         console.log(result);
-        // req.user.photo = results.photo;
-         res.json(result);
-       })
-       .catch(err => {
-         console.log("Change Password Error: " + err);
-         res.status(400).json(err);
-       });
- 
-   },
-
   //delete a user
   deleteUser: (req, res) => {
     db.Users.destroy({

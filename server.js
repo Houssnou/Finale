@@ -33,12 +33,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //fire up routes
-//app.use(routes);
+app.use(routes);
 
 // Syncing our sequelize models and then starting our express app
-db.sequelize.sync({force:true}).then(function () {
+db.sequelize.sync({ force: true }).then(function () {
   app.listen(PORT, function () {
     console.log("App running on server http://localhost:" + PORT);
-    //console.log(listEndpoints(app));
+    console.log(listEndpoints(app));
   });
 });

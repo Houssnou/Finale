@@ -18,7 +18,7 @@ module.exports = function (req, res, next) {
     cloudinary.uploader.upload(files.photo.path, result => {
       console.log(result);
       req.body.photo = result.secure_url;
-      req.body.captio = fields.caption;
+      req.body.caption = fields.caption;
 
       console.log(req.body);
       next();

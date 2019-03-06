@@ -26,9 +26,7 @@ module.exports = function(sequelize, DataTypes) {
         allowNull: false
       }
     });
-  };
-   //backward relation btw Photos and User
-   Photos.associate = models=> {
+  
     // A review belongs to a user
     // and can't be created without an user id associate as the foreign key constraint
     Photos.belongsTo(models.Users, {

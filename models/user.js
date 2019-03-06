@@ -1,7 +1,7 @@
 //importing bcrypt fro password hashing
 const bcryptjs = require('bcryptjs');
 
-module.exports = function(sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {
   var Users = sequelize.define("Users", {
     userName: {
       type: DataTypes.STRING,
@@ -19,23 +19,23 @@ module.exports = function(sequelize, DataTypes) {
         isEmail: true
       }
     },
-     password: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len:[6,10]
+        len: [6, 10]
       }
     },
-    photo:{
+    photo: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue:"https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
+      defaultValue: "https://mdbootstrap.com/img/Photos/Others/placeholder.jpg",
       validate: {
         isUrl: true
       }
     }
     ,
-    description:{
+    description: {
       type: DataTypes.STRING,
       allowNull: true
     }
@@ -53,27 +53,25 @@ module.exports = function(sequelize, DataTypes) {
     console.log(user);
   });
 
-    //defining the association of the users and Reviews
-  Users.associate = models =>{
+  //Users association with Reviews and Comments
+  Users.associate = models => {
     // Associating Users with Reviews
     // When a user is deleted, also delete any associated Reviews
     Users.hasMany(models.Reviews, {
       onDelete: "cascade"
-    });  
-  };
-  Users.associate = models =>{
+    });
+  
     // Associating Users with Comments
     // When a user is deleted, also delete any associated Comments
     Users.hasMany(models.Comments, {
       onDelete: "cascade"
-    });  
-  };
-  Users.associate = models =>{
+    });
+  
     // Associating Users with Reviews
     // When a user is deleted, also delete any associated Reviews
     Users.hasMany(models.Photos, {
       onDelete: "cascade"
-    });  
+    });
   };
   return Users;
 };

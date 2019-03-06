@@ -18,8 +18,7 @@ module.exports = function (sequelize, DataTypes) {
       defaultValue: 0
     }
   });
-
-  //backward relation btw Comments and User and reviews
+  // Comments association with User and reviews
   Comments.associate = models => {
     // A comment belongs to a review
     // and can't be created without an review id associate as the foreign key constraint
@@ -36,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false
       }
     });
-    
+
   };
   return Comments;
 };

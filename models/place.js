@@ -73,9 +73,7 @@ module.exports = function (sequelize, DataTypes) {
     Places.hasMany(models.Reviews, {
       onDelete: "cascade"
     });
-  };
-  //defining the association of the Reviews and Photos
-  Places.associate = models => {
+  
     // Associating Users with Reviews
     // When a user is deleted, also delete any associated Reviews
     Places.hasMany(models.Photos, {

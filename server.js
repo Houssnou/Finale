@@ -3,6 +3,7 @@ const express = require("express");
 const session = require('express-session');
 const listEndpoints = require('express-list-endpoints');
 const passport = require("./utils/middleware/passport-local");
+const exphbs = require("express-handlebars");
 
 // import routes
 const routes = require("./routes");
@@ -14,6 +15,10 @@ const db = require("./models");
 //set up the APP
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// Set Handlebars as the default templating engine.
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 
 // Sets up the Express app to handle data parsing

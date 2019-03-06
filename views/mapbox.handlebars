@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset='utf-8' />
+  <title>Set a point after Geocoder result</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script
+    src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.2/mapbox-gl-geocoder.min.js'></script>
+  <link rel='stylesheet'
+    href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v3.1.2/mapbox-gl-geocoder.css'
+    type='text/css' />
+  <style>
+    #geocoder-container>div {
+      min-width: 50%;
+      margin-left: 25%;
+    }
+  </style>
+  <div id='map'></div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiaG91c3Nub3UiLCJhIjoiY2pzb3Y1MzFjMHF2NDQzbXJiZnFyYXJxYyJ9.4Hxx99nq1-FphHd_fNljag';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/streets-v9',
+      center: [-79.4512, 43.6568],
+      zoom: 13
+    });
+
+    var geocoder = new MapboxGeocoder({
+      accessToken: mapboxgl.accessToken
+    });
+
+    map.addControl(geocoder);
+
+    // After the map style has loaded on the page, add a source layer and default
+    // styling for a single point.
+    map.on('load', function () {
+      map.addSource('single-point', {
+        "type": "geojson",
+        "data": {
+          "type": "FeatureCollection",
+          "features": []
+        }
+      });
+
+      map.addLayer({
+        "id": "point",
+        "source": "single-point",
+        "type": "circle",
+        "paint": {
+          "circle-radius": 10,
+          "circle-color": "#007cbf"
+        }
+      });
+
+      // Listen for the `result` event from the MapboxGeocoder that is triggered when a user
+      // makes a selection and add a symbol that matches the result.
+      geocoder.on('result', function (ev) {
+        //create an object to get the results
+        let result = ev.result;
+
+        console.log(ev.result);
+        map.getSource('single-point').setData(ev.result.geometry);
+        const placeName = ev.result.place_name;
+        const address = ev.result.properties.address;
+        const category = ev.result.properties.category;
+        const location = ev.result.geometry.coordinates[0] + "-" + ev.result.geometry.coordinates[1];
+        const zipcode = ev.result.context[0].text;
+        const city = ev.result.context[1].text;
+        const state = ev.result.context[2].text;
+        const country = ev.result.context[3].text;
+        console.log("here we go:");
+        console.log(placeName);
+        console.log(address);
+        console.log(category);
+        console.log(location);
+        console.log(zipcode);
+        console.log(city);
+        console.log(state);
+        console.log(country);
+
+
+        // When a click event occurs on a feature in the places layer, open a popup at the
+        // location of the feature, with description HTML from its properties.
+        map.on('click', 'point', function (e) {
+          console.log(e)
+          e.features[0].properties.description=`<strong>${placeName}</strong><br><p>Leave a review for this place <a href="./places">Leave a review</a></p>`;
+
+          var coordinates = e.features[0].geometry.coordinates.slice();
+          var description = e.features[0].properties.description;
+
+          // Ensure that if the map is zoomed out such that multiple
+          // copies of the feature are visible, the popup appears
+          // over the copy being pointed to.
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+          }
+
+          new mapboxgl.Popup()
+            .setLngLat(coordinates)
+            .setHTML(description)
+            .addTo(map);
+        });
+
+
+        // Change the cursor to a pointer when the mouse is over the places layer.
+        map.on('mouseenter', 'point', function () {
+          map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'point', function () {
+          map.getCanvas().style.cursor = '';
+        });
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>

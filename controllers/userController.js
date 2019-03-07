@@ -60,7 +60,7 @@ module.exports = {
                 .json(err);
             }
             console.log(req.user);
-            return res.json("/");
+            return res.json("/user");
           });
       })
       .catch(function (err) {
@@ -72,7 +72,7 @@ module.exports = {
   },
   login: function (req, res) {
     console.log(req.user);
-    res.json("Logged In");
+    res.json("/places");
   },
 
   //update a user /:id

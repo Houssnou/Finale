@@ -16,52 +16,72 @@ $(document).ready(() => {
   };
 
   //function to build reviews in form of list of cards
-  const showPlaceReviews = (review) => {
+  const showPlaceReviews = (review, index) => {
+    //build the card
+    const $card = $("<card>");
+    //the header
+    const $cardheader = $(`<div class='card-header' id='heading${index + 1}'>`);
+    //div row to wrap the line : title dates comments
+    //inside the header we will have a row with 3colums 2-8-2
+    const $row = $("<div class='row'>");
+    const $Title = $("<div class='col-12 d-flex align-content-start'>");
 
-    //for each review get user infos
-    console.log("review info");
-    console.log(review);
+    //button to make the title clikable
+    const $buttonTitle = $(
+      `<button class='btn btn-link' type='button' 
+              data-toggle='collapse' data-target='#review${index + 1}'
+              aria-expanded='false' aria-controls='review${index + 1}'
+              style='color: black; font-weight: bold; text-decoration: none'>`
+    ).text(review.title).appendTo($Title);
 
 
-    //build a row for each review
-    const rowCard = $("<div class='row my-2'>");
-    const colCard = $("<div class='col-12'>");
-    //build the card and its components
-    const card = $("<div class= 'card'>");
-    const cardHeader = $("<div class='card-header'>");
+    //append the title to the row and append this row to the cardHeader
+    $row.append($Title).appendTo($cardheader);
 
+    const $divCollapse = $(
+      `<div id='review${index + 1}' aria-labelledby='heading${index + 1}' data-parent='#accordion'>`);
+
+    //quick check to determine if it should be a class collapse show or not        
+    (index === 0) ? $divCollapse.addClass("collapse show") : $divCollapse.addClass("collapse");
+
+    const $cardBody = $("<div class='card-body'>");
+    //row => col-10 for the author and date
     const $firstRow = $("<div class='row'>");
     const $colAuthor = $("<div class='col-10'>");
+    const $colAuthorText = $("<h4>").text(`Reviewed by: ${review.UserId} 
+On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($colAuthor);
 
-    const $colAuthorText = $("<h3>").text(`User id: ${review.UserId} - ${review.createdAt} - ${review.upvotes} - ${review.downvotes}`).appendTo($colAuthor);
-    // col-2 for the comments 
     const $colComment = $("<div class='col-2'>");
-    const nComments = review.Comments.length;
-    const $colCommentText = $(`<button class='comments btn btn-primary' data-review='${review.id}' data-user='${userId}' data-toggle='modal' data-target='#comment-modal'>`)
+    const $colCommentText = $(`<button class='comments btn btn-primary' data-review='${review.id}' data-toggle='modal' data-target='#comment-modal'>`)
       .text("Comments: ").appendTo($colComment);
     const $colCommentNumber = $("<span class='badge badge-light' id='num-comments'>")
-      .text(`${nComments}`).appendTo($colCommentText);
+      .text(`${review.Comments.length}`).appendTo($colCommentText);
+
     $firstRow.append($colAuthor, $colComment);
 
-    cardHeader.append($firstRow);
 
-    const cardBody = $("<div class='card-body'>");
-    const cardTitle = $("<h5 class='card-title'>").text(review.title).appendTo(cardBody);
-    const cardText = $("<p class='card-text'>").text(review.description).appendTo(cardBody);
-    //--------------//
+    // row =>=> col-12 => span  for the description 
+    const $bodyRow = $("<div class='row'>");
+
+    const $colDesc = $("<div class='col-12'>");
+    const $colDescText = $("<span class='border-0'>");
+    $colDescText.text(review.description)
+      .appendTo($colDesc);
+
+    $bodyRow.append($colDesc);
+    const hr = $("<hr>");
+
     //let build the content of the comment section if reviews.comments exist
-
-    const $listGroup = $("<div class='list-group table-striped w-75 mx-auto '>");
-
     if (review.Comments.length > 0) {
       //create new div at the bottom to display the comments
       const $divCommentContent = $("<div class='border border-dark'>");
 
+      const $listGroup = $("<div class='list-group table-striped w-75 mx-auto'>");
       //build a list item for each comment
       review.Comments.forEach(comment => {
         //build the 
         const $rowComment = $("<div class='list-group-item list-group-item-action flex-column align-items-start my-2'>");
-        const $rowInfos = $("<div class='row d-flex w-100 justify-content-start text-muted mb-2'>");
+        const $rowInfos = $("<div class='row d-flex w-100 justify-content-start text-muted'>");
         const $colUsername = $("<div class='col-3' style='font-weight: bold'>").text(`Posted by: ${comment.UserId}`).appendTo($rowInfos);
         const $colCreatedAt = $("<div class='col-9' style='font-weight: bold'>").text(`On: ${moment(comment.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($rowInfos);
         const $rowBody = $("<div class='row d-flex w-100 justify-content-between text-muted border-0'>");
@@ -75,16 +95,16 @@ $(document).ready(() => {
 
       //then append to 
       $listGroup.appendTo($divCommentContent);
-    }
-    //append firstRow, linkRow, bodyRow all together to divCollape
-    // $cardBody.append($firstRow, $linkRow, $lineBreak, $bodyRow, $lineBreak, $listGroup).appendTo($divCollapse);
-    //--------------//
-    //append the card header and body
-    card.append(cardHeader, cardBody, $listGroup);
-    //append the card to the col-12 and append it to the row
-    colCard.append(card).appendTo(rowCard);
-    //append the row to the jumbotroon
-    $("#reviews").append(rowCard);
+      //append firstRow, linkRow, bodyRow all together to divCollape
+      $cardBody.append($firstRow, hr, $bodyRow, hr, $listGroup).appendTo($divCollapse);
+
+    } else {
+      //then display the reviews infos w/o building the comment section
+      //append firstRow, linkRow, bodyRow all together to divCollape
+      $cardBody.append($firstRow, hr, $bodyRow).appendTo($divCollapse);
+    };
+    //build the card content
+    $card.append($cardheader, $divCollapse).appendTo("#accordion");
 
   };
   //check if the place exist already in the db
@@ -100,12 +120,9 @@ $(document).ready(() => {
       console.log(res);
       //alert("add a review");
       showPlaceinfos(res);
+      res.Reviews.forEach((review, index) => showPlaceReviews(review,index));
       //get the value of placeID
       placeId = (res.id);
-
-      //display the review for each review
-      res.Reviews.forEach(review => showPlaceReviews(review));
-
     } else {
       alert("Be the first to leave a review");
       //then its a new place that we will create in our database
@@ -116,18 +133,15 @@ $(document).ready(() => {
           url: "/api/places",
           data: placeData
         }).then(result => {
-          console.log(result);
+          //console.log(result);
           showPlaceinfos(result);
           //get the value of placeID
           placeId = (result.id);
-          
         }).catch(err => {
           console.log(err);
         });
-
       })
     }
-
   }).catch(err => {
     console.log(err);
   });

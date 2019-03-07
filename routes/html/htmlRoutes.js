@@ -14,6 +14,10 @@ router.get("/mapbox", (req, res) => {
   res.render("mapbox");
 });
 
+router.get("/user", (req, res) => {
+  res.render("user");
+});
+
 /* router.get("/burgers", (req, res) => {
   cnx.query("Select * from burgers",(err,dbBurgers) =>{
     if(err){

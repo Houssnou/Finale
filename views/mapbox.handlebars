@@ -76,51 +76,47 @@
       // Listen for the `result` event from the MapboxGeocoder that is triggered when a user
       // makes a selection and add a symbol that matches the result.
       geocoder.on('result', function (ev) {
-        //create an object to get the results
-        let result = ev.result;
-
         console.log(ev.result);
         map.getSource('single-point').setData(ev.result.geometry);
-        const placeName = ev.result.place_name;
-        const address = ev.result.properties.address;
-        const category = ev.result.properties.category;
-        const location = ev.result.geometry.coordinates[0] + "-" + ev.result.geometry.coordinates[1];
-        const zipcode = ev.result.context[0].text;
-        const city = ev.result.context[1].text;
-        const state = ev.result.context[2].text;
-        const country = ev.result.context[3].text;
-        console.log("here we go:");
-        console.log(placeName);
-        console.log(address);
-        console.log(category);
-        console.log(location);
-        console.log(zipcode);
-        console.log(city);
-        console.log(state);
-        console.log(country);
-
+        //build an oject to send to the session
+        const placeData = {
+          name: ev.result.place_name,
+          address: ev.result.properties.address,
+          city: ev.result.context[1].text,
+          state: ev.result.context[2].text,
+          postalCode: ev.result.context[0].text,
+          location: ev.result.geometry.coordinates[0] + "," + ev.result.geometry.coordinates[1],
+          category: ev.result.properties.category,
+          review_count: 0,
+          is_Open: true
+        };
+        console.log(placeData);
 
         // When a click event occurs on a feature in the places layer, open a popup at the
         // location of the feature, with description HTML from its properties.
         map.on('click', 'point', function (e) {
           console.log(e)
-          e.features[0].properties.description=`<strong>${placeName}</strong><br><p>Leave a review for this place <a href="./places">Leave a review</a></p>`;
+          e.features[0].properties.description = `<strong>${placeData.name}</strong><br><p>Leave a review for this place <a href="./places">Leave a review</a></p>`;
+          //set data to local storage
+          localStorage.setItem("place", JSON.stringify(placeData));
+         
 
           var coordinates = e.features[0].geometry.coordinates.slice();
           var description = e.features[0].properties.description;
 
-          // Ensure that if the map is zoomed out such that multiple
+          {{!-- // Ensure that if the map is zoomed out such that multiple
           // copies of the feature are visible, the popup appears
-          // over the copy being pointed to.
-          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          }
+          // over the copy being pointed to. --}}
 
-          new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-        });
+          while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+              }
+
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+            });
 
 
         // Change the cursor to a pointer when the mouse is over the places layer.
@@ -138,5 +134,6 @@
   </script>
 
 </body>
+{{!-- <script src="assets/js/mapbox.js"></script> --}}
 
 </html>

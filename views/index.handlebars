@@ -1,31 +1,160 @@
- <!-- nav bar  -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
-        </li>
-      </ul>     
-    </div>
-  </nav>
-  <!-- end nav bar -->
-  <!-- jumbotron -->
-  <div class="container">
-    <div class="jumbotron my-4 text-center">
-      <h1 class="display-4">Review It</h1>
-      <p class="lead">This is a Node, Express, MySQL and express-handlebars powered application.</p>
-      <hr class="my-4">
-      <p>It uses Express to handle routing and server HTML as well as JSON, MySQL to store data, and jQuery for AJAX
-        requests and handling other front-end logic.</p>
-      <br>
-      Additional technologies:
-      <ul class="list-unstyled">
-        <li>Bootstrap group list items</li>
-        <li>Bootstrap accordion</li>
-        <li>Bootstrap bagdes</li>
-      </ul>
-      <br>
-      <a class="btn btn-primary btn-lg" href="./mapbox" role="button">Try it!</a>
+<!-- nav bar  -->
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="./">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <button type="button" class="btn btn-danger mx-2 font-weight-bold" data-toggle="modal" data-target="#loginModal">
+      LOGIN
+    </button>
+    <button type="button" class="btn btn-success mx-2 font-weight-bold" data-toggle="modal"
+      data-target="#registerModal">
+      SIGN UP
+    </button>
+  </div>
+</nav>
+<!-- end nav bar -->
+<!-- jumbotron -->
+<div class="container">
+  <div class="jumbotron my-4 text-center">
+    <h1 class="display-4">Review It</h1>
+    <p class="lead">This is a Node, Express, MySQL and express-handlebars powered application.</p>
+    <hr class="my-4">
+    <p>It uses Express to handle routing and server HTML as well as JSON, MySQL to store data, and jQuery for AJAX
+      requests and handling other front-end logic.</p>
+    <br>
+    Additional technologies:
+    <ul class="list-unstyled">
+      <li>Bootstrap group list items</li>
+      <li>Bootstrap accordion</li>
+      <li>Bootstrap bagdes</li>
+    </ul>
+    <br>
+    <a class="btn btn-primary btn-lg" href="./mapbox" role="button">Try it!</a>
+  </div>
+</div>
+<!-- end jumbotron -->
+
+
+{{!-- LOGIN MODAL --}}
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{!-- <h5 class="modal-title text-center" id="loginModalTitle">Sign in</h5> --}}
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{!-- ADD A FUCKING LOG IN FORM HERE --}}
+        <div class="container">
+          <form>
+            <div class="row w-75 mx-auto">
+              <h5 class="mb-2 mx-auto">Sign in</h5>
+              <div class="col-12 my-3">
+                <input type="text" class="form-control" id="loginUsername" placeholder="Username">
+              </div>
+              <div class="col-12 my-3">
+                <input type="text" class="form-control" id="loginPassword" placeholder="Password">
+              </div>
+              <button type="button" class="btn btn-primary mx-auto" data-dismiss="modal">Sign in</button>
+            </div>
+          </form>
+        </div>
+        <br>
+        {{!-- add href link to other modal if possible --}}
+        <small id="newUserLink" class="form-text text-center">Don't have an account? <a href="registerModal">Click here
+            to sign
+            up!</a></small>
+      </div>
+      {{!-- END FUCKING LOG IN FORM --}}
+      <div class="modal-footer"></div>
     </div>
   </div>
-  <!-- end jumbotron -->
+</div>
+{{!-- END OF LOGIN MODAL --}}
+
+
+{{!-- START OF REGISTER MODAL --}}
+<div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="text-center mb-4">Register</h5>
+        {{!-- ADD REGISTRATION HERE --}}
+        <div class="container">
+
+          <div class="row">
+            <div class="col-12 col-lg-5 col-sm-12">
+              {{!-- IMAGE UPLOAD HERE --}}
+              <div>
+                <div class="d-flex justify-content-center">
+                  <img class="my-4" src="https://via.placeholder.com/225" alt="profile pic" />
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button class="btn" style="">upload picture</button>
+                </div>
+              </div>
+              {{!-- END IMAGE SECTION --}}
+            </div>
+            <div class="col-12 col-lg-7 col-sm-12 col-xs-12">
+              {{!-- REGISTER FORM HERE --}}
+              <div class="card">
+                <div class="card-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="nameRegister">Name</label>
+                      <input type="text" class="form-control" id="nameRegister" aria-describedby="nameHelp"
+                        placeholder="Enter your name" />
+                    </div>
+                    <div class="form-group">
+                      <label for="emailRegister">Email</label>
+                      <input type="email" class="form-control" id="emailRegister" aria-describedby="emailHelp"
+                        placeholder="Enter email" />
+                      <small id="emailHelp" class="form-text text-dark">We'll never share your email with anyone
+                        else.</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="passwordRegister">Password</label>
+                      <input type="password" class="form-control" id="passwordRegister" aria-describedby="passwordHelp"
+                        placeholder="PASSWORD" />
+                      <small id="passwordHelp" class="form-text text-dark">Make a secure password and don't forget
+                        it!</small>
+                    </div>
+                    <div class="form-group">
+                      <label for="passwordConfirm">Confirm Password</label>
+                      <input type="password" class="form-control" id="passwordConfirm"
+                        aria-describedby="passwordConfirmHelp" placeholder="CONFIRM PASSWORD" />
+                    </div>
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-primary mx-1 mb-3">submit</button>
+                      <button class="btn btn-danger mx-1 mb-3">cancel</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              {{!-- REGISTER FORM END --}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        {{!-- <button type="button" class="btn btn-primary">Create Account</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- END OF REGISTER MODAL --}}

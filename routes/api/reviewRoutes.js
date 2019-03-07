@@ -9,12 +9,13 @@ router
 
 //method for /api/review/placeId
 router
-.route("/:placeId")
+.route("/Byplace:placeId")
 .get(reviewController.getReviewsByPlace);
 
 //method for /api/placeId
 router
 .route("/:id")
+.get(reviewController.SelectReview)
 .delete(reviewController.deleteReview);
 
 module.exports = router;

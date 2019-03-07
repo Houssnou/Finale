@@ -1,1 +1,55 @@
-<h1>Here we are</h1>
+<div class="container">
+  <div class="jumbotron p-1 my-2">
+    <h1>Place infos here</h1>
+    <h1 id="h1">Here we are</h1>
+    <h2 id="h2"></h2>
+    <h2 id="h3"></h2>
+    <h2 id="h4"></h2>
+  </div>
+  <div class="jumbotron bg-dark my-2 p-1 text-light">
+    photos go here
+  </div>
+  <button class="btn btn-lg btn-primary disabled" 
+          id="add-review" data-toggle="modal" data-target="#review-modal"> Add a review </button>
+  <button class="btn btn-lg btn-primary disabled" id="add-photo"> Add a picture </button>
+  <a class="btn btn-lg btn-primary" href="./user" id="login"> login or signup to leave a review</a>
+  <div class="jumbotron bg-dark my-2 text-light" id="reviews">
+  reviews go here as card with title as header content as body
+</div>
+</div>
+
+{{!-- review modal --}}
+<div class="modal fade" id="review-modal" tabindex="-1" role="dialog" aria-labelledby="review-modal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">New review</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Title:</label>
+            <input type="text" class="form-control" id="title-input">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Description:</label>
+            <textarea class="form-control" id="description-input"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-review">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- end review modal --}}
+
+{{!-- upload photo modal --}}
+{{!-- end upload photo modal --}}
+
+<script src="assets/js/place.js"></script>

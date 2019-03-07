@@ -36,7 +36,7 @@ module.exports = {
       .Places
       .findOne({
         where: {
-          fullName: req.params.fullName
+          name: req.params.fullName
         },
         include: [db.Reviews, db.Photos]
       })

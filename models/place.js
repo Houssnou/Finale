@@ -1,16 +1,9 @@
 module.exports = function (sequelize, DataTypes) {
   var Places = sequelize.define("Places", {
-    fullName: {
+      name: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: {
-        len: [1]
-      }
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
       validate: {
         len: [1]
       }

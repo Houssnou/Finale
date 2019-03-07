@@ -43,7 +43,7 @@ $(document).ready(() => {
       showPlaceinfos(res);
       //get the value of placeID
       placeId = (res.id);
-
+      res.Reviews.forEach(review => showPlaceReviews(review));
     } else {
       alert("Be the first to leave a review");
       //then its a new place that we will create in our database
@@ -58,6 +58,7 @@ $(document).ready(() => {
           showPlaceinfos(result);
           //get the value of placeID
           placeId = (result.id);
+          
         }).catch(err => {
           console.log(err);
         });

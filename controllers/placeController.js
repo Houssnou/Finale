@@ -38,7 +38,7 @@ module.exports = {
         where: {
           name: req.params.fullName
         },
-        include: [db.Reviews, db.Photos]
+        include: [db.Photos, {model: db.Reviews, include: [db.Comments]}]
       })
       .then(dbPlaces => {
         res.json(dbPlaces);

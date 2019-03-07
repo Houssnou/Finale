@@ -120,7 +120,6 @@ $(document).ready(() => {
           showPlaceinfos(result);
           //get the value of placeID
           placeId = (result.id);
-          
         }).catch(err => {
           console.log(err);
         });

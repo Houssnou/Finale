@@ -42,9 +42,15 @@
     review </button>
   <button class="btn btn-lg btn-primary disabled" id="add-photo"> Add a picture </button>
   <a class="btn btn-lg btn-primary" href="./user" id="login"> login or signup to leave a review</a>
-  <div class="jumbotron bg-dark my-2 text-light" id="reviews">
-    reviews go here as card with title as header content as body
-  </div>
+  <div class="jumbotron bg-dark my-2 " id="reviews">
+  {{!-- Accordion here --}}
+    <div class="container">
+      <div class="accordion" id="accordion">
+        {{!-- Dynamic reviews come here --}}
+      </div>
+    </div>
+    <!-- end accordion -->
+</div>
 </div>
 
 {{!-- review modal --}}
@@ -77,6 +83,36 @@
   </div>
 </div>
 {{!-- end review modal --}}
+
+<!-- begin Comment modal -->
+<div class="modal fade" id="comment-modal" tabindex="-1" role="dialog" aria-labelledby="Comment-modal"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="comment-modal-title">Add a new comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="update-modal-body">
+        <!-- modal body -->
+        <div class="form-row">
+          <div class="form-group col">
+            <textarea class="form-control" id="comment-input" cols="30" rows="10"
+              placeholder="Your comment here"></textarea>
+          </div>
+        </div>
+        <!-- end body -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-outline-primary" id="save-comment" type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end Comment modal -->
 
 {{!-- upload photo modal --}}
 {{!-- end upload photo modal --}}

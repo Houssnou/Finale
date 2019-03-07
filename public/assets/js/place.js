@@ -102,14 +102,10 @@ $(document).ready(() => {
       showPlaceinfos(res);
       //get the value of placeID
       placeId = (res.id);
-<<<<<<< HEAD
 
       //display the review for each review
       res.Reviews.forEach(review => showPlaceReviews(review));
 
-=======
-      res.Reviews.forEach(review => showPlaceReviews(review));
->>>>>>> d3e9478ede3d9e117eb867ee70886a75b6a19a6b
     } else {
       alert("Be the first to leave a review");
       //then its a new place that we will create in our database

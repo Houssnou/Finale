@@ -100,7 +100,7 @@
         <div class="form-row">
           <div class="form-group col">
             <textarea class="form-control" id="comment-input" cols="30" rows="10"
-              placeholder="Your comment here"></textarea>
+              placeholder="Write an awesome decription about yourself!"></textarea>
           </div>
         </div>
         <!-- end body -->
@@ -225,25 +225,25 @@
                 <div class="card-body">
                   <form>
                     <div class="form-group">
-                      <label for="accountName">Name</label>
+                      <label for="accountName">Username</label>
                       <input type="text" class="form-control" id="accountName" aria-describedby="nameHelp"
-                        placeholder="Enter your name" />
+                        placeholder="" disabled>
                     </div>
                     <div class="form-group">
                       <label for="accountEmail">Email</label>
                       <input type="email" class="form-control" id="accountEmail" aria-describedby="emailHelp"
-                        placeholder="Enter email" />
+                        placeholder="" disabled>
                       <small id="emailHelp" class="form-text text-dark">This is your email.</small>
                     </div>
                     <div class="form-group">
                       <label for="accountBio">Bio</label>
                       <textarea class="form-control" id="accountBio" aria-describedby="bioHelp"
-                        placeholder="PASSWORD" rows="3"></textarea>
+                        placeholder="I'm awesome" rows="3"></textarea>
                       <small id="bioHelp" class="form-text text-dark">Write a nice bio for yourself!</small>
                     </div>
                     <div class="d-flex justify-content-end">
-                      <button class="btn btn-primary mx-1 mb-3">Save Changes</button>
-                      <button class="btn btn-danger mx-1 mb-3"  data-dismiss="modal">cancel</button>
+                      <button class="btn btn-primary mx-1 mb-3" id="saveAccountBtn">Save Changes</button>
+                      <button class="btn btn-danger mx-1 mb-3"  data-dismiss="modal">Cancel</button>
                     </div>
                   </form>
                 </div>
@@ -261,3 +261,4 @@
 {{!-- ACCOUNT MODAL END --}}
 
 <script src="assets/js/place.js"></script>
+<script src="assets/js/accountSettingsTemp.js"></script>

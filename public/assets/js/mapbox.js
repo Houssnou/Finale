@@ -3,7 +3,7 @@ $document.ready(()=>{
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',
-    center: [-79.4512, 43.6568],
+    center: [-73.98567, 40.758213],
     zoom: 13
   });
   

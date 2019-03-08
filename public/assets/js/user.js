@@ -27,19 +27,28 @@ $(document).ready(function () {
     };
 
     console.log(userData);
+    const cPassword = $("#cpassword-input").val().trim();
+    // if password-input === c-password-input then return true and go with ajax
 
-    //ajax call to create the user
-    $.ajax({
-      url: "/api/users",
-      method: "POST",
-      data: userData
-    })
-      .then((userCreated) => {
-        // console.log(userCreated);
-        location.replace(userCreated);
-      }).catch(err => {
-        console.log(err);
-      });
+    if (userData.password === cPassword) {
+      //ajax call to create the user
+      $.ajax({
+        url: "/api/users",
+        method: "POST",
+        data: userData
+      })
+        .then((userCreated) => {
+          // console.log(userCreated);
+          location.replace(userCreated);
+        }).catch(err => {
+          console.log(err);
+        });
+
+    } else {
+      $("#passNotMatch").append("Please make sure your passswords match");
+      return false;
+    }
+
   });
 
   //event listener for a click on submit registration

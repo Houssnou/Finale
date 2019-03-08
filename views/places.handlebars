@@ -34,21 +34,38 @@
 {{!-- NAVBAR END --}}
 <div class="container">
   <div class="jumbotron p-1 my-2">
-    <h1>Place infos here</h1>
-    <h1 id="h1">Here we are</h1>
-    <h2 id="h2"></h2>
-    <h2 id="h3"></h2>
-    <h2 id="h4"></h2>
+    <div class="row">
+      <div class="col-9">
+        <h1 class="text-center"><u><strong>General Infos</strong></u></h1>
+        <h2 id="h1"></h2>
+        <h2 id="h2"></h2>
+        <h2 id="h3"></h2>
+        <h2 id="h4"></h2>
+      </div>
+      <div class="col-3 border-left border-dark">
+        <div class="list-group my-5 mr-3">
+          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" id="add-review" data-toggle="modal" data-target="#review-modal" disabled>Add a review
+          </button>
+          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" id="add-photo" data-toggle="modal" data-target="#upload-modal" disabled>Add a photo</button>
+          
+        <button class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" href="#" id="">See more</button>
+        </div>
+      {{!-- <button class="btn btn-lg btn-primary disabled mx-2 my-2" id="add-review" data-toggle="modal" data-target="#review-modal">
+          Add a
+          review </button>
+        <button class="btn btn-lg btn-primary disabled" id="add-photo" data-toggle="modal" data-target="#upload-modal">
+          Add a
+          picture </button> --}}
+        
+      </div>
+    </div>
   </div>
-  <div class="jumbotron bg-dark my-2 p-1 text-light d-flex justify-content-center">
-    <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
+  <div class="jumbotron bg-dark my-2 p-1 text-light d-flex justify-content-center invisible" id="carousel">
+    <div id="picture-carousel" class="carousel slide" data-ride="carousel">
+
+    </div>
   </div>
-  <button class="btn btn-lg btn-primary" id="add-review" data-toggle="modal" data-target="#review-modal" disabled> Add a
-    review </button>
-  <button class="btn btn-lg btn-primary" id="add-photo" disabled> Add a picture </button>
+
   <div class="jumbotron my-2 p-1" id="reviews">
     {{!-- Accordion here --}}
 
@@ -121,6 +138,44 @@
 <!-- end Comment modal -->
 
 {{!-- upload photo modal --}}
+
+<div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="upload-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upload-modal-title">Upload an image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group my-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Upload</span>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="input-upload" aria-describedby="input-upload">
+            <label class="custom-file-label">Choose file</label>
+          </div>
+        </div>
+        <div class="form-row d-flex justify-content-center" id="image-display">
+          {{!--  <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" /> --}}
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="name-input">Caption :</label>
+            <input class="form-control" id="caption-input" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-picture">Save picture</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{!-- end upload photo modal --}}
 
 

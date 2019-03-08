@@ -28,6 +28,7 @@ router
 //methods for api/users/:id (PUT and DELETE)
 router
   .route("/:id")
+  .get(userController.getUserById)
   .get(userController.getUserActivities)
   .put(cloudinaryMiddleware,userController.updateAccount)
   .delete(userController.deleteUser);

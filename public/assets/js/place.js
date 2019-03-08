@@ -215,19 +215,22 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
     url: "/api/users/status",
     method: 'GET'
   }).then(function (userConnected) {
+    console.log(`below is user connected`)
     console.log(userConnected);
     if (userConnected) {
       //get the value of userId 
       userId = userConnected.id;
       //enable button to let user reviews, comments and photo
-      $("#add-review").removeClass("disabled");
-      $("#add-photo").removeClass("disabled");
+      $("#add-review").prop("disabled", false);
+      $("#add-photo").prop("disabled", false);
 
       //disabled button login 
-      $("#login").addClass("disabled");
-    }
+      $("#login").css("display", "none");
+      $("#profileDropdown").removeClass("invisible");
+    } 
   });
-
+  
+  
   //event listener for a click on save on the modal
   $("#save-review").on("click", (event) => {
     //prvent page to reload

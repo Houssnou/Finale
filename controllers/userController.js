@@ -14,6 +14,22 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+  getUserById: (req,res) => {
+    db
+      .Users
+      .findOne({
+        where: {
+          id: req.params.id
+        },
+      })
+      .then(dbUsers => {
+        res.json(dbUsers);
+      })
+      .catch(err => {
+        console.log(`Select by id error ${err}`);
+        res.status(400).json(err);
+      });
+  },
   //select a user activities
   getUserActivities: (req, res) => {
     db

@@ -15,7 +15,7 @@ $(document).ready(() => {
     $("#h4").text(`Is this place open: ${place.is_Open}`);
   };
 
-  //function to build reviews in form of list of cards
+  //function to build reviews in form of accordion
   const showPlaceReviews = (review, index) => {
     //build the card
     const $card = $("<card>");
@@ -107,6 +107,64 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
     $card.append($cardheader, $divCollapse).appendTo("#accordion");
 
   };
+
+  //function to build a carousel display a place pictures
+  const showPlacePhotos = (arr) => {
+    //display the jumbotron that contains the carousel
+    $("#carousel").removeClass("invisible");
+
+    //build the carousel ordered list with a class of carousel-indicators
+    const carouselList = $("<ol class='carousel-indicators'>");
+    arr.forEach((picture, index) => {
+      //create the list item
+      //if it is the first image add class active
+      const carouselListItem = $(`<li data-target='#picture-carousel'data-slide-to='${index}'>`);
+     /*  if (index === 0) {
+        carouselListItem.addClass("active");
+      } */
+      //append li to the ol
+      carouselListItem.appendTo(carouselList);
+    });
+
+    //append the ordered list to the carousel
+    $("#picture-carousel").append(carouselList);
+
+    //build the carousel inner
+    const carouselInner = $("<div class='carousel-inner'>");
+    arr.forEach((picture, index) => {
+      const carouselItem = $("<div class='carousel-item'>");
+      if (index === 0) {
+        carouselItem.addClass("active");
+      }
+      //img tag
+      const img = $("<img>");
+      img.attr("alt", picture.caption)
+        .attr("src", picture.url);
+      //carousel caption
+      const caption = $("<div class='carousel-caption d-none d-md-block'>");
+      const h5 = $("<h5>").text(picture.caption).appendTo(caption);
+      carouselItem.append(img, caption).appendTo(carouselInner);
+      //append the carousel inner to the carousel
+      $("#picture-carousel").append(carouselInner);
+    });
+
+    //build the carousel actions
+    //previous
+    const previous = $("<a class='carousel-control-prev' href='#picture-carousel' role='button' data-slide='prev'>")
+    const previousIcon = $("<span class='carousel-control-prev-icon' aria-hidden='true'>");
+    const previousText = $("<span class='sr-only'>").text("Previous");
+    previous.append(previousIcon, previousText);
+
+    //Next
+    const next = $("<a class='carousel-control-next' href='#picture-carousel' role='button' data-slide='next'>")
+    const nextIcon = $("<span class='carousel-control-next-icon' aria-hidden='true'>");
+    const nextText = $("<span class='sr-only'>").text("Next");
+    next.append(nextIcon, nextText);
+
+    //append the 2 action buttons at the very end of picture-carousel
+    $("#picture-carousel").append(previous, next);
+
+  }
   //check if the place exist already in the db
   //and pull infos to display if it exists
   //ajax call to check if the place exists
@@ -120,7 +178,13 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
       console.log(res);
       //alert("add a review");
       showPlaceinfos(res);
-      res.Reviews.forEach((review, index) => showPlaceReviews(review,index));
+      res.Reviews.forEach((review, index) => showPlaceReviews(review, index));
+      //if there are some photos then display the carousel
+      console.log(res.Photos.length);
+      if (res.Photos.length > 0) {
+        showPlacePhotos(res.Photos);
+      }
+
       //get the value of placeID
       placeId = (res.id);
     } else {
@@ -231,5 +295,69 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
         location.reload();
       });
     });
+  });
+
+  //event listener for picture upload
+  $("#input-upload").on("change", function () {
+    var imgPath = $(this)[0].value;
+    var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+    if (extn === "gif" || extn === "png" || extn === "jpg" || extn === "jpeg") {
+      if (typeof (FileReader) != "undefined") {
+
+        var image_holder = $("#image-display");
+        image_holder.empty();
+
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          //console.log(e.target.result);
+          $("<img />", {
+            "src": e.target.result,
+            "class": "thumb-image"
+          }).appendTo(image_holder);
+
+        }
+        //image_holder.show();
+        reader.readAsDataURL($(this)[0].files[0]);
+      } else {
+        alert("This browser does not support FileReader.");
+      }
+    } else {
+      alert("Please a valid image format!");
+    }
+  });
+
+  //event listener for saving a picture
+  $("#save-picture").on("click", function () {
+    //first build an object image
+
+    const pictureData = {
+      caption: $("#caption-input").val().trim(),
+      PlaceId: placeId,
+      UserdId: userId
+    };
+    console.log(pictureData);
+    // create formData object (needed for sending image)
+    const form = new FormData();
+    form.append('caption', pictureData.caption);
+    form.append('PlaceId', pictureData.PlaceId);
+    form.append('UserId', pictureData.UserdId);
+    //grab the image file
+    const imageData = document.getElementById("input-upload").files[0];
+    if (imageData) {
+      form.append('url', imageData, imageData.name);
+    };
+    console.log(form);
+    //ajax call to save the  picture
+    $.ajax({
+      url: "/api/photos",
+      method: "POST",
+      data: form,
+      cache: false,
+      contentType: false,
+      processData: false,
+    })
+      .then(function (data) {
+        console.log(data);
+      });
   });
 });

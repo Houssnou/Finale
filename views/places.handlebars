@@ -31,22 +31,38 @@
 {{!-- NAVBAR END --}}
 <div class="container">
   <div class="jumbotron p-1 my-2">
-    <h1>Place infos here</h1>
-    <h1 id="h1">Here we are</h1>
-    <h2 id="h2"></h2>
-    <h2 id="h3"></h2>
-    <h2 id="h4"></h2>
+    <div class="row">
+      <div class="col-9">
+        <h1 class="text-center"><u><strong>General Infos</strong></u></h1>
+        <h2 id="h1"></h2>
+        <h2 id="h2"></h2>
+        <h2 id="h3"></h2>
+        <h2 id="h4"></h2>
+      </div>
+      <div class="col-3 border-left border-dark">
+        <div class="list-group my-5 mr-3">
+          <a href="#" class="btn btn-lg btn-primary disabled list-group-item list-group-item-action my-2 text-center" id="add-review" data-toggle="modal" data-target="#review-modal">Add a review
+          </a>
+          <a href="#" class="btn btn-lg btn-primary disabled list-group-item list-group-item-action my-2 text-center" id="add-photo" data-toggle="modal" data-target="#upload-modal" >Add a photo</a>
+          
+        <a class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" href="./user" id="login">login / signup</a>
+        </div>
+      {{!-- <button class="btn btn-lg btn-primary disabled mx-2 my-2" id="add-review" data-toggle="modal" data-target="#review-modal">
+          Add a
+          review </button>
+        <button class="btn btn-lg btn-primary disabled" id="add-photo" data-toggle="modal" data-target="#upload-modal">
+          Add a
+          picture </button> --}}
+        
+      </div>
+    </div>
   </div>
   <div class="jumbotron bg-dark my-2 p-1 text-light d-flex justify-content-center invisible" id="carousel">
     <div id="picture-carousel" class="carousel slide" data-ride="carousel">
-      
+
     </div>
   </div>
-  <button class="btn btn-lg btn-primary disabled" id="add-review" data-toggle="modal" data-target="#review-modal"> Add a
-    review </button>
-  <button class="btn btn-lg btn-primary disabled" id="add-photo" data-toggle="modal" data-target="#upload-modal"> Add a
-    picture </button>
-  <a class="btn btn-lg btn-primary" href="./user" id="login"> login or signup to leave a review</a>
+
   <div class="jumbotron my-2 p-1" id="reviews">
     {{!-- Accordion here --}}
 

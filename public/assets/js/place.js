@@ -358,6 +358,7 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
     })
       .then(function (data) {
         console.log(data);
+        location.reload();
       });
   });
 });

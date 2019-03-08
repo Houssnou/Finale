@@ -35,6 +35,6 @@ router
 //method to change user password
   router
   .route("/changePassword/:id")
-  .put(cloudinaryMiddleware,userController.changePassword)
+  .put(cloudinaryMiddleware,userController.changePassword);
 
 module.exports = router;

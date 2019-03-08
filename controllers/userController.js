@@ -128,5 +128,11 @@ module.exports = {
         res.status(400).json(err);
       });
 
-  }
+  },
+  //log out
+  logout:(req, res)=>{
+    console.log("user logged out");
+    req.logout();
+    res.redirect('/places');
+  });
 }

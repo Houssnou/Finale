@@ -8,7 +8,7 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
     <ul class="navbar-nav">
       <li class="nav-item">
-       <a class="btn btn-primary" href="/mapbox">Search for more places</a>
+        <a class="btn btn-primary" href="/mapbox">Search for more places</a>
       </li>
     </ul>
     <ul class="navbar-nav ml-auto">
@@ -18,8 +18,10 @@
           <i class="fas fa-user"></i> Profile </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
           {{!-- MODAL LINKS --}}
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accountModal"><i class="far fa-user-circle"></i>My account</a>
-          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#settingsModal"><i class="fas fa-cogs"></i> Settings</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accountModal"><i
+              class="far fa-user-circle"></i>My account</a>
+          <a class="dropdown-item" href="#" data-toggle="modal" data-target="#settingsModal"><i class="fas fa-cogs"></i>
+            Settings</a>
           <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i>Log out</a>
         </div>
       </li>
@@ -29,30 +31,46 @@
 {{!-- NAVBAR END --}}
 <div class="container">
   <div class="jumbotron p-1 my-2">
-    <h1>Place infos here</h1>
-    <h1 id="h1">Here we are</h1>
-    <h2 id="h2"></h2>
-    <h2 id="h3"></h2>
-    <h2 id="h4"></h2>
-  </div>
-  <div class="jumbotron bg-dark my-2 p-1 text-light d-flex justify-content-center">
-    <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img  src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img  src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-    <img  src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" />
-  </div>
-  <button class="btn btn-lg btn-primary disabled" id="add-review" data-toggle="modal" data-target="#review-modal"> Add a
-    review </button>
-  <button class="btn btn-lg btn-primary disabled" id="add-photo"> Add a picture </button>
-  <a class="btn btn-lg btn-primary" href="./user" id="login"> login or signup to leave a review</a>
-  <div class="jumbotron my-2 p-1" id="reviews">
-  {{!-- Accordion here --}}
-   
-      <div class="accordion" id="accordion">
-        {{!-- Dynamic reviews come here --}}
+    <div class="row">
+      <div class="col-9">
+        <h1 class="text-center"><u><strong>General Infos</strong></u></h1>
+        <h2 id="h1"></h2>
+        <h2 id="h2"></h2>
+        <h2 id="h3"></h2>
+        <h2 id="h4"></h2>
       </div>
-        <!-- end accordion -->
-</div>
+      <div class="col-3 border-left border-dark">
+        <div class="list-group my-5 mr-3">
+          <a href="#" class="btn btn-lg btn-primary disabled list-group-item list-group-item-action my-2 text-center" id="add-review" data-toggle="modal" data-target="#review-modal">Add a review
+          </a>
+          <a href="#" class="btn btn-lg btn-primary disabled list-group-item list-group-item-action my-2 text-center" id="add-photo" data-toggle="modal" data-target="#upload-modal" >Add a photo</a>
+          
+        <a class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" href="./user" id="login">login / signup</a>
+        </div>
+      {{!-- <button class="btn btn-lg btn-primary disabled mx-2 my-2" id="add-review" data-toggle="modal" data-target="#review-modal">
+          Add a
+          review </button>
+        <button class="btn btn-lg btn-primary disabled" id="add-photo" data-toggle="modal" data-target="#upload-modal">
+          Add a
+          picture </button> --}}
+        
+      </div>
+    </div>
+  </div>
+  <div class="jumbotron bg-dark my-2 p-1 text-light d-flex justify-content-center invisible" id="carousel">
+    <div id="picture-carousel" class="carousel slide" data-ride="carousel">
+
+    </div>
+  </div>
+
+  <div class="jumbotron my-2 p-1" id="reviews">
+    {{!-- Accordion here --}}
+
+    <div class="accordion" id="accordion">
+      {{!-- Dynamic reviews come here --}}
+    </div>
+    <!-- end accordion -->
+  </div>
 </div>
 
 {{!-- review modal --}}
@@ -117,6 +135,44 @@
 <!-- end Comment modal -->
 
 {{!-- upload photo modal --}}
+
+<div class="modal fade" id="upload-modal" tabindex="-1" role="dialog" aria-labelledby="upload-modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="upload-modal-title">Upload an image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="input-group my-2">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Upload</span>
+          </div>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" id="input-upload" aria-describedby="input-upload">
+            <label class="custom-file-label">Choose file</label>
+          </div>
+        </div>
+        <div class="form-row d-flex justify-content-center" id="image-display">
+          {{!--  <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" /> --}}
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="name-input">Caption :</label>
+            <input class="form-control" id="caption-input" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="save-picture">Save picture</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{!-- end upload photo modal --}}
 
 
@@ -145,51 +201,51 @@
 
 {{!-- SETTINGS MODAL --}}
 <div class="modal fade" id="settingsModal" tabindex="-1" role="dialog" aria-labelledby="settingsModal"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h5 class="text-center mb-4">Account Settings</h5>
-          {{!-- ADD ACCUONT SETTINGS HERE --}}
-          <div class="container">
-              
-              <div class="">
-                {{!-- PASSWORD RESET HERE --}}
-                <div class="card">
-                  <div class="card-body">
-                    <form>
-                      <div class="form-group">
-                        <label for="passwordRegister">Password</label>
-                        <input type="password" class="form-control" id="passwordRegister" aria-describedby="passwordHelp"
-                          placeholder="PASSWORD" />
-                        <small id="passwordHelp" class="form-text text-dark">Make a secure password and don't forget
-                          it!</small>
-                      </div>
-                      <div class="form-group">
-                        <label for="passwordConfirm">Confirm Password</label>
-                        <input type="password" class="form-control" id="passwordConfirm"
-                          aria-describedby="passwordConfirmHelp" placeholder="CONFIRM PASSWORD" />
-                      </div>
-                      <div class="d-flex justify-content-end">
-                        <button class="btn btn-primary mx-1 mb-3">submit</button>
-                        <button class="btn btn-danger mx-1 mb-3"data-dismiss="modal">cancel</button>
-                      </div>
-                    </form>
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5 class="text-center mb-4">Account Settings</h5>
+        {{!-- ADD ACCUONT SETTINGS HERE --}}
+        <div class="container">
+
+          <div class="">
+            {{!-- PASSWORD RESET HERE --}}
+            <div class="card">
+              <div class="card-body">
+                <form>
+                  <div class="form-group">
+                    <label for="passwordRegister">Password</label>
+                    <input type="password" class="form-control" id="passwordRegister" aria-describedby="passwordHelp"
+                      placeholder="PASSWORD" />
+                    <small id="passwordHelp" class="form-text text-dark">Make a secure password and don't forget
+                      it!</small>
                   </div>
-                </div>
-                {{!-- PASSWORD RESET END --}}
+                  <div class="form-group">
+                    <label for="passwordConfirm">Confirm Password</label>
+                    <input type="password" class="form-control" id="passwordConfirm"
+                      aria-describedby="passwordConfirmHelp" placeholder="CONFIRM PASSWORD" />
+                  </div>
+                  <div class="d-flex justify-content-end">
+                    <button class="btn btn-primary mx-1 mb-3">submit</button>
+                    <button class="btn btn-danger mx-1 mb-3" data-dismiss="modal">cancel</button>
+                  </div>
+                </form>
               </div>
+            </div>
+            {{!-- PASSWORD RESET END --}}
           </div>
         </div>
-        <div class="modal-footer"></div>
       </div>
+      <div class="modal-footer"></div>
     </div>
   </div>
+</div>
 {{!-- SETTINGS MODAL END --}}
 
 
@@ -239,13 +295,13 @@
                     </div>
                     <div class="form-group">
                       <label for="accountBio">Bio</label>
-                      <textarea class="form-control" id="accountBio" aria-describedby="bioHelp"
-                        placeholder="PASSWORD" rows="3"></textarea>
+                      <textarea class="form-control" id="accountBio" aria-describedby="bioHelp" placeholder="PASSWORD"
+                        rows="3"></textarea>
                       <small id="bioHelp" class="form-text text-dark">Write a nice bio for yourself!</small>
                     </div>
                     <div class="d-flex justify-content-end">
                       <button class="btn btn-primary mx-1 mb-3">Save Changes</button>
-                      <button class="btn btn-danger mx-1 mb-3"  data-dismiss="modal">cancel</button>
+                      <button class="btn btn-danger mx-1 mb-3" data-dismiss="modal">cancel</button>
                     </div>
                   </form>
                 </div>

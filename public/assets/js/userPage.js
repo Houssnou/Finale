@@ -14,40 +14,37 @@ $(document).ready(function () {
       url: "/api/reviews/user/" + userId,
       method: "GET"
     }).then(userReviews => {
-      console.log(`list of reviews`);
-      console.log(userReviews);
-
       // get page information(description, #of reviews, and review merit score) of user page session
       $("#userPageGreeting").text(`Welcome ${userConnected.userName},`);
       $("#userPageJumbotronText").text("This is where you can see your review and comment history of the places you've visited. You can even see you own user stats here!");
-      
+
       $(".userPagePic")
         .attr("src", userConnected.photo)
         .attr("alt", "profile page pic");
 
       $("#profilePageDesc").append(userConnected.description);
       $("#numberOfReviews").append(userReviews.length);
-      
+
 
 
       //dynamically make a card list
       // for each review, dymanically make a card per review
       userReviews.forEach(review => {
-        console.log(review.Place.name);
+        //console.log(review.Place.name);
         const $userReviewsListDiv = $("#userReviewsList");
-        const reviewsCard = $("<div class='card'>");
-        const reviewsCardHeader = $("<div class='row card-header'>");
+        const reviewsCard = $("<div class='card my-2'>");
+        const reviewsCardHeader = $("<div class='row'>");
         const reviewsHeaderCol1 = $("<div class='col d-flex justify-content-start'>");
         const reviewsLocation = $("<h5>").text(review.Place.name);
         const reviewsHeaderCol2 = $("<div class='col d-flex justify-content-end'>");
-        const reviewsDate = $("<h5>").text(review.createdAt);
+        const reviewsDate = $("<h5>").text(`${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`);
 
         const reviewsCardBody = $("<div class='card-body'>");
         const cardBodyRow = $("<div class='row'>");
         const cardBodyCol1 = $("<div class='col d-flex justify-content-start'>");
         const cardBodyTitle = $("<h5 class='card-title'>").text(review.title);
         const cardBodyCol2 = $("<div class='col d-flex justify-content-end'>");
-        const cardVoteScore = $("<div>").text("Upvotes: 1 | Downvotes: 0");
+        const cardVoteScore = $("<div>").text(`Upvotes: ${review.upvotes} | Downvotes: ${review.downvotes}`);
         const reviewsDescription = $("<p class='card-text'>").text(review.description);
 
         // append everything to reviewslist
@@ -76,7 +73,7 @@ $(document).ready(function () {
           .append(reviewsCardBody);
       }); // End of for each loop to create cards display reviews card
 
-    
+
     }); //end of reviews AJAX call
 
     // now make ajax call to get user comments
@@ -84,59 +81,49 @@ $(document).ready(function () {
       url: "/api/comments/user/" + userId,
       method: "GET"
     }).then(userComments => {
-      console.log(`these  r ur comments api list`);
-      console.log(userComments);
-
       // now make another forEach loop boi
       userComments.forEach(comment => {
-          // here comes a call of variables
-          const $userCommentsListDiv = $("#userCommentsList");
-          const userCommentsCard = $("<div class='card'>");
-          const userCommentsHeader = $("<div class='row card-header'>");
-          const commentHeaderCol1 = $("<div class='col d-flex justify-content-start'>");
-          const commentFromReview = $("<h5 class='card-title'>").text(`Commented from: ${comment.Review.title}`);
-          const commentHeaderCol2 = $("<div class='col d-flex justify-content-end'>");
-          const commentDate = $("<h5>").text(comment.createdAt);
+        // here comes a call of variables
+        const $userCommentsListDiv = $("#userCommentsList");
+        const userCommentsCard = $("<div class='card my-2'>");
+        const userCommentsHeader = $("<div class='row card-header'>");
+        const commentHeaderCol1 = $("<div class='col d-flex justify-content-start'>");
+        const commentFromReview = $("<h5 class='card-title'>").text(`Commented from: ${comment.Review.title}`);
+        const commentHeaderCol2 = $("<div class='col d-flex justify-content-end'>");
+        const commentDate = $("<h5>").text(`${moment(comment.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`);
 
-          const commentCardBody = $("<div class='card-body'>");
-          const commentBodyRow = $("<div class='row'>");
-          const commentBodyCol1 = $("<div class='col d-flex justify-content-start'>");
-          const commentBodyCol2 = $("<div class='col d-flex justify-content-end'>");
-          const cardVoteScore = $("<div>").text("Upvotes: 1 | Downvotes: 0");
-          const commentDescription = $("<p class='card-text'>").text(comment.description);
+        const commentCardBody = $("<div class='card-body'>");
+        const commentBodyRow = $("<div class='row'>");
+        const commentBodyCol1 = $("<div class='col d-flex justify-content-start'>");
+        const commentBodyCol2 = $("<div class='col d-flex justify-content-end'>");
+        const cardVoteScore = $("<div>").text(`Upvotes: ${comment.upvotes} | Downvotes: ${comment.downvotes}`);
+        const commentDescription = $("<p class='card-text'>").text(comment.description);
 
 
-          commentFromReview.appendTo(commentHeaderCol1);
-          commentDate.appendTo(commentHeaderCol2);
+        commentFromReview.appendTo(commentHeaderCol1);
+        commentDate.appendTo(commentHeaderCol2);
 
-          userCommentsHeader
-            .append(commentHeaderCol1)
-            .append(commentHeaderCol2);
+        userCommentsHeader
+          .append(commentHeaderCol1)
+          .append(commentHeaderCol2);
 
-          // append card body parts together and then attach it all to the div
-          cardVoteScore.appendTo(commentBodyCol2);
+        // append card body parts together and then attach it all to the div
+        cardVoteScore.appendTo(commentBodyCol2);
 
-          commentBodyRow
-            .append(commentBodyCol1)
-            .append(commentBodyCol2);
+        commentBodyRow
+          .append(commentBodyCol1)
+          .append(commentBodyCol2);
 
-          commentCardBody
-            .append(commentBodyRow)
-            .append(commentDescription);
+        commentCardBody
+          .append(commentBodyRow)
+          .append(commentDescription);
 
-          // append to comment card and then to div!
-          userCommentsCard
-            .append(userCommentsHeader).appendTo($userCommentsListDiv)
-            .append(commentCardBody);
+        // append to comment card and then to div!
+        userCommentsCard
+          .append(userCommentsHeader).appendTo($userCommentsListDiv)
+          .append(commentCardBody);
       });
-
-
     });
-
-    // make ajax call to get all user comments when getAllUserComments routes/controller is set up
-
-
-
   }); //end of ajax call that checks for status/user session
 
 

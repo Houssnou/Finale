@@ -34,13 +34,14 @@ module.exports = {
   getUserActivities: (req, res) => {
     db
       .Users
-      .findAll({
+      .findOne({
         where: {
           id: req.params.userId
         },
         include: [db.Reviews,db.Comments,db.Photos]
       })
       .then(dbUsers => {
+        console.log(dbUsers);
         res.json(dbUsers);
 
       })

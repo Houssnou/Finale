@@ -48,7 +48,7 @@ module.exports = {
         res.status(400).json(err);
       });
   },
- /*  getCommentsByUser: (req, res) => {
+  getCommentsByUser: (req, res) => {
     db
       .Comments
       .findAll({
@@ -64,7 +64,7 @@ module.exports = {
             console.log(error);
             res.json(400).json(error)
           })
-  }, */
+  },
   //delete a Comment
   deleteComment: (req, res) => {
     db

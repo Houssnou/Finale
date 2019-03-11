@@ -12,10 +12,17 @@ router
 .route("/Byplace:placeId")
 .get(reviewController.getReviewsByPlace);
 
+// method for /api/review/user/:userId
+router
+  .route("/user/:userId")
+  .get(reviewController.getReviewsByUser);
+
 //method for /api/placeId
 router
 .route("/:id")
 .get(reviewController.SelectReview)
 .delete(reviewController.deleteReview);
+
+
 
 module.exports = router;

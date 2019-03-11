@@ -1,5 +1,5 @@
 $document.ready(()=>{
-  mapboxgl.accessToken = 'pk.eyJ1IjoiaG91c3Nub3UiLCJhIjoiY2pzb3Y1MzFjMHF2NDQzbXJiZnFyYXJxYyJ9.4Hxx99nq1-FphHd_fNljag';
+  mapboxgl.accessToken = 'pk.eyJ1Ijoia2ltamluc3V6IiwiYSI6ImNqc25uYTMzdTAydWIzeXJ1bHRwN2tnbHUifQ.VQGmM5y9FGWEuJBBZFeTpQ';
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/streets-v9',

@@ -64,6 +64,23 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+  getReviewsByUser: (req, res) =>{
+    db
+      .Reviews
+      .findAll({
+          where: {
+            UserId: req.params.userId
+          },
+          include: [db.Places]
+      })
+        .then(dbReviews => {
+          res.json(dbReviews);
+        })
+        .catch(error => {
+          console.log(`Select reviews by userId error: ${error}`);
+          res.status(400).json(error);
+        });
+  },
   //delete a review
   deleteReview: (req, res) => {
     db

@@ -18,9 +18,9 @@ router
 .put(CommentController.updateComment)
 .delete(CommentController.deleteComment);
 
-// method for /api/comments/user/:userId
-/* router
-  .route("/user/:id")
+//method for /api/comments/user/:userId
+router
+  .route("/user/:userId")
   .get(CommentController.getCommentsByUser);
- */
+
 module.exports = router;

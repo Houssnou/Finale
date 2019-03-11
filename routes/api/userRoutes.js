@@ -29,9 +29,13 @@ router
 router
   .route("/:id")
   .get(userController.getUserById)
-  .get(userController.getUserActivities)
   .put(cloudinaryMiddleware,userController.updateAccount)
   .delete(userController.deleteUser);
+
+// methods for user activities with api/users/activities/:id
+router
+  .route("/activities/:id")
+  .get(userController.getUserActivities);
 
 //method to change user password
   router

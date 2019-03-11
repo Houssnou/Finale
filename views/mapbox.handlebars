@@ -42,7 +42,7 @@
     var map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/streets-v9',
-      center: [-79.4512, 43.6568],
+      center: [-74.521286, 40.535434],
       zoom: 13
     });
 
@@ -96,7 +96,7 @@
         // location of the feature, with description HTML from its properties.
         map.on('click', 'point', function (e) {
           console.log(e)
-          e.features[0].properties.description = `<strong>${placeData.name}</strong><br><p>Leave a review for this place <a href="./places">Leave a review</a></p>`;
+          e.features[0].properties.description = `<strong>${placeData.name}</strong><br><p>Based on your search, here is the place you  are looking for. <a href="./places">Leave a review.</a></p>`;
           //set data to local storage
           localStorage.setItem("place", JSON.stringify(placeData));
          

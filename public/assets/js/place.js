@@ -8,11 +8,17 @@ $(document).ready(() => {
 
   //function to display the result content
   const showPlaceinfos = (place) => {
+    $("#locationNameDiv").text("Location name & address:");
     $("#h1").text(place.name);
-    $("#h2").text(`Category: ${place.category}`);
+    $("#locationCategory").text("Category:");
+    $("#h2").text(place.category);
     const nReviews = (place.Reviews) ? place.Reviews.length : 0;
-    $("#h3").text(`Number review: ${nReviews}`);
-    $("#h4").text(`Is this place open: ${place.is_Open}`);
+    $("#locationReviews").text("Number of reviews:");
+    $("#h3").text(nReviews);
+    $("#locationAvailable").text("Currently open?");
+    
+    // if place.is.Open === true print yes. else print no
+    (placeData.is_Open) ? $("#h4").text("yes") : $("#h4").text("no");
   };
 
   //function to build reviews in form of accordion
@@ -67,12 +73,23 @@ $(document).ready(() => {
     const $bodyRow = $("<div class='row'>");
 
     const $colDesc = $("<div class='col-12'>");
-    const $colDescText = $("<span class='border-0'>");
+    const $colDescText = $("<p class='border-0'>");
     $colDescText.text(review.description)
       .appendTo($colDesc);
-
+        
     $bodyRow.append($colDesc);
     const hr = $("<hr>");
+
+    // append buttons to agree or disagree with review as upvote or downvote
+    let upvoteBtn = $("<button class='reviewUpvote btn btn-sm btn-success'>");
+    let downvoteBtn = $("<button class='mx-1 reviewDownvote btn btn-sm btn-danger'>");
+    
+    upvoteBtn.text("👍 Useful");
+    downvoteBtn.text("👎 Disagree");
+    // append buttons to $colDesc
+    $colDesc
+      .append(upvoteBtn)
+      .append(downvoteBtn);
 
     //let build the content of the comment section if reviews.comments exist
     if (review.Comments.length > 0) {
@@ -87,13 +104,23 @@ $(document).ready(() => {
         const $rowInfos = $("<div class='row d-flex w-100 justify-content-start text-muted'>");
         const $colUsername = $("<div class='col-3' style='font-weight: bold'>").text(`Posted by:  ${comment.User.userName}`).appendTo($rowInfos);
         const $colCreatedAt = $("<div class='col-9' style='font-weight: bold'>").text(`On: ${moment(comment.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($rowInfos);
-        const $rowBody = $("<div class='row d-flex w-100 justify-content-between text-muted border-0'>");
-        const $ptext = $("<div class='col-12'>").text(comment.description).appendTo($rowBody);
+        const $rowBody = $("<div class='row d-flex w-100 text-muted border-0'>");
+        const $ptext = $("<p class='col-12'>").text(comment.description).appendTo($rowBody);
 
+        let upvoteBtn = $("<button class='commentUpvote btn btn-sm btn-success'>");
+        let downvoteBtn = $("<button class='mx-1 commentDownvote btn btn-sm btn-danger'>");
+
+        upvoteBtn.text("👍 Useful");
+        downvoteBtn.text("👎 Disagree");
         //
         $rowComment.append($rowInfos, $rowBody)
         //
         $rowComment.appendTo($listGroup);
+
+        // append up/downvote btns to comments
+        $rowComment
+          .append(upvoteBtn)
+          .append(downvoteBtn);
       });
 
       //then append to 
@@ -142,7 +169,8 @@ $(document).ready(() => {
       //img tag
       const img = $("<img>");
       img.attr("alt", picture.caption)
-        .attr("src", picture.url);
+        .attr("src", picture.url)
+        .addClass("placeImageReview");
       //carousel caption
       const caption = $("<div class='carousel-caption d-none d-md-block'>");
       const h5 = $("<h5>").text(picture.caption).appendTo(caption);
@@ -317,7 +345,7 @@ $(document).ready(() => {
           //console.log(e.target.result);
           $("<img />", {
             "src": e.target.result,
-            "class": "thumb-image"
+            "class": "thumb-image placeImageReview"
           }).appendTo(image_holder);
 
         }
@@ -351,6 +379,7 @@ $(document).ready(() => {
     if (imageData) {
       form.append('url', imageData, imageData.name);
     };
+    console.log(`form for place pic`);
     console.log(form);
     //ajax call to save the  picture
     $.ajax({

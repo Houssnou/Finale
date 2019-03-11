@@ -1,6 +1,6 @@
 {{!-- NAVBAR AREA --}}
-<nav class="navbar navbar-expand-lg navbar-dark bg-info">
-  <a href="#" class="navbar-brand">Review it</a>
+<nav class="navbar navbar-expand-lg navbar-dark reviewItNav">
+  <a href="#" class="px-3 border border-white navbar-brand">Review it</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent-4"
     aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -13,13 +13,14 @@
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="btn btn-primary" href="./user" id="login"> login</a>
+        <a class="btn btn-primary btn-lg" href="./user" id="login"> login</a>
       </li>
       <li class="nav-item dropdown invisible" id="profileDropdown">
 
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
-          <img src="https://i.kym-cdn.com/entries/icons/original/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.png" alt="user profile pic" class="rounded-circle"> Profile </a>
+          
+          <img class="rounded-circle" id="user-avatar"> Profile </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
           {{!-- MODAL LINKS --}}
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accountModal"><i
@@ -35,28 +36,39 @@
 <div class="container">
   <div class="jumbotron p-1 my-2">
     <div class="row">
-      <div class="col-9">
-        <h1 class="text-center"><u><strong>General Infos</strong></u></h1>
-        <h2 id="h1"></h2>
-        <h2 id="h2"></h2>
-        <h2 id="h3"></h2>
-        <h2 id="h4"></h2>
-      </div>
-      <div class="col-3 border-left border-dark">
-        <div class="list-group my-5 mr-3">
-          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" id="add-review" data-toggle="modal" data-target="#review-modal" disabled>Add a review
-          </button>
-          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" id="add-photo" data-toggle="modal" data-target="#upload-modal" disabled>Add a photo</button>
-          
-        <button class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" href="#" id="">See more</button>
+      <div class="col-md-8 col-lg-9" id="placeInfos">
+        <h1 class="text-center"><u><strong>General Info</strong></u></h1>
+        <div><strong id="locationNameDiv"></strong>
+          <p id="h1"></p>
         </div>
-      {{!-- <button class="btn btn-lg btn-primary disabled mx-2 my-2" id="add-review" data-toggle="modal" data-target="#review-modal">
+        <div><strong id="locationCategory"></strong>
+          <p id="h2"></p>
+        </div>
+        <div><strong id="locationReviews"></strong>
+          <p id="h3"></p>
+        </div>
+        <div><strong id="locationAvailable"></strong>
+          <p id="h4"></p>
+        </div>
+      </div>
+      <div class="col-md-4 col-lg-3" id="left-border">  {{!-- border-left border-dark --}}
+        <div class="list-group my-5 mr-3">
+          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center"
+            id="add-review" data-toggle="modal" data-target="#review-modal" disabled>Add a review
+          </button>
+          <button href="#" class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center"
+            id="add-photo" data-toggle="modal" data-target="#upload-modal" disabled>Add a photo</button>
+
+          <button class="btn btn-lg btn-primary list-group-item list-group-item-action my-2 text-center" href="#"
+            id="">See more</button>
+        </div>
+        {{!-- <button class="btn btn-lg btn-primary disabled mx-2 my-2" id="add-review" data-toggle="modal" data-target="#review-modal">
           Add a
           review </button>
         <button class="btn btn-lg btn-primary disabled" id="add-photo" data-toggle="modal" data-target="#upload-modal">
           Add a
           picture </button> --}}
-        
+
       </div>
     </div>
   </div>
@@ -148,6 +160,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
       <div class="modal-body">
         <div class="input-group my-2">
           <div class="input-group-prepend">
@@ -159,7 +172,7 @@
           </div>
         </div>
         <div class="form-row d-flex justify-content-center" id="image-display">
-          {{!--  <img src="https://via.placeholder.com/225" alt="profile pic" class="mx-1" /> --}}
+          
         </div>
         <div class="form-row">
           <div class="form-group col-12">
@@ -168,6 +181,7 @@
           </div>
         </div>
       </div>
+
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" id="save-picture">Save picture</button>
@@ -213,10 +227,27 @@
               {{!-- IMAGE UPLOAD HERE --}}
               <div>
                 <div class="d-flex justify-content-center">
-                  <img class="my-4" src="https://via.placeholder.com/200" alt="profile pic" />
+                  <div class="profilePicDivContainer">
+                    <div id="userProfilePic"></div>
+                    <img class="my-4" id="profilePlaceHolder" />
+                  </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                  <button class="btn" id="uploadProfilePic  ">upload picture</button>
+
+                  <div>
+                    <div class="input-group my-2">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Upload</span>
+                      </div>
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="profile-input-upload" aria-describedby="profile-input-upload">
+                        <label class="custom-file-label">Choose file</label>
+                      </div>
+                    </div>
+                    <div class="form-row d-flex justify-content-center" id="profile-image-display">
+                      <button class="btn" id="uploadProfilePic">upload picture</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               {{!-- END IMAGE SECTION --}}
@@ -244,19 +275,19 @@
                 <div class="tab-content" id="nav-tabContent">
                   <div class="tab-pane fade show active" id="nav-profile" role="tabpanel"
                     aria-labelledby="nav-profile-tab">
-                  <div class="card-body">
-                    <h5>Username:</h5>
-                    <div id="username"></div>
-                    <br>
+                    <div class="card-body">
+                      <h5>Username:</h5>
+                      <div id="username"></div>
+                      <br>
 
-                    <h5>Email:</h5>
-                    <div id="userEmail"></div>
-                    <br>
+                      <h5>Email:</h5>
+                      <div id="userEmail"></div>
+                      <br>
 
-                    <h5>Bio:</h5>
-                    <div id="bioInfo"></div>
-                  </div>
-                    
+                      <h5>Bio:</h5>
+                      <div id="bioInfo"></div>
+                    </div>
+
 
                   </div>
                   <div class="tab-pane fade" id="nav-edit-profile" role="tabpanel"

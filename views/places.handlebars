@@ -25,7 +25,7 @@
           {{!-- MODAL LINKS --}}
           <a class="dropdown-item" href="#" data-toggle="modal" data-target="#accountModal"><i
               class="far fa-user-circle"></i>My account</a>
-          <a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt"></i>Log out</a>
+          <a class="dropdown-item" href="./api/users/logout" id="logout"><i class="fas fa-sign-out-alt"></i>Log out</a>
         </div>
 
       </li>
@@ -78,7 +78,7 @@
     </div>
   </div>
 
-  <div class="jumbotron my-2 p-1" id="reviews">
+  <div class="jumbotron my-2 p-1 invisible" id="reviews">
     {{!-- Accordion here --}}
 
     <div class="accordion" id="accordion">

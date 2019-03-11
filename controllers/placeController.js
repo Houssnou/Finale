@@ -8,7 +8,8 @@ module.exports = {
       .Places
       .create(req.body)
       .then(result => {
-        res.json(result)
+        console.log("Place created!");
+        res.json(result);
       })
       .catch(err => {
         console.log("Place Creation Error: " + err);
@@ -38,7 +39,7 @@ module.exports = {
         where: {
           name: req.params.fullName
         },
-        include: [db.Photos, {model: db.Reviews, include: [db.Comments]}]
+        include: [db.Photos, {model: db.Reviews, include: [{model: db.Comments,include:[db.Users]},db.Users]}]
       })
       .then(dbPlaces => {
         res.json(dbPlaces);

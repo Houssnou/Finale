@@ -143,6 +143,5 @@ module.exports = {
         console.log("Delete Error: " + err);
         res.status(400).json(err);
       });
-
   }
 }

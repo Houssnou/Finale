@@ -23,7 +23,7 @@ var userId;
         data: bioUpdate
       }).then(updatedResult => {
         console.log(updatedResult);
-        
+
       })
       location.reload();
       /* $("#accountBio").val("");

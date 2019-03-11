@@ -80,5 +80,21 @@ module.exports = {
         console.log("Delete Comment Error: " + err);
         res.status(400).json(err);
       });
+  },
+  //update a comment (upvote/downvote) 
+  updateComment: (req, res) => {
+    db
+      .Comments
+      .update(req.body, {
+        where: {
+          id: req.params.id
+        }
+      }).then(result => {
+        res.json(result)
+      })
+      .catch(err => {
+        console.log("Comment Update Error: " + err);
+        res.status(400).json(err);
+      });
   }
 }

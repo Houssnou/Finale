@@ -3,6 +3,7 @@ const router = require("express").Router();
 
 //routes
 router.get("/", (req, res) => {
+  console.log('HOMEPAGE ROUTE HIT');
   res.render("index");
 });
 

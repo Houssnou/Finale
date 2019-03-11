@@ -48,6 +48,23 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+ /*  getCommentsByUser: (req, res) => {
+    db
+      .Comments
+      .findAll({
+        where: {
+          UserId: req.params.userId
+        },
+        include: [db.Reviews]
+      })
+        .then(dbComments => {
+          res.json(dbComments);
+        })
+          .catch(error => {
+            console.log(error);
+            res.json(400).json(error)
+          })
+  }, */
   //delete a Comment
   deleteComment: (req, res) => {
     db

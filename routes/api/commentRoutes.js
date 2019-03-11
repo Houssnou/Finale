@@ -17,4 +17,9 @@ router
 .route("/:id")
 .delete(CommentController.deleteComment);
 
+// method for /api/comments/user/:userId
+/* router
+  .route("/user/:id")
+  .get(CommentController.getCommentsByUser);
+ */
 module.exports = router;

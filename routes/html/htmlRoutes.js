@@ -18,6 +18,10 @@ router.get("/user", (req, res) => {
   res.render("user");
 });
 
+router.get("/userPage", (req, res) => {
+  res.render("userPage");
+});
+
 /* router.get("/burgers", (req, res) => {
   cnx.query("Select * from burgers",(err,dbBurgers) =>{
     if(err){

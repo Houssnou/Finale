@@ -96,5 +96,21 @@ module.exports = {
         console.log("Delete Review Error: " + err);
         res.status(400).json(err);
       });
+  },
+  //update a review (upvote/downvote) 
+  updateReview: (req, res) => {
+    db
+      .Reviews
+      .update(req.body, {
+        where: {
+          id: req.params.id
+        }
+      }).then(result => {
+        res.json(result)
+      })
+      .catch(err => {
+        console.log("Review Update Error: " + err);
+        res.status(400).json(err);
+      });
   }
 }

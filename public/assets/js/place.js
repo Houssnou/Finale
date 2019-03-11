@@ -16,7 +16,7 @@ $(document).ready(() => {
     $("#locationReviews").text("Number of reviews:");
     $("#h3").text(nReviews);
     $("#locationAvailable").text("Currently open?");
-    
+
     // if place.is.Open === true print yes. else print no
     (placeData.is_Open) ? $("#h4").text("yes") : $("#h4").text("no");
   };
@@ -76,16 +76,21 @@ $(document).ready(() => {
     const $colDescText = $("<p class='border-0'>");
     $colDescText.text(review.description)
       .appendTo($colDesc);
-        
+
     $bodyRow.append($colDesc);
     const hr = $("<hr>");
 
     // append buttons to agree or disagree with review as upvote or downvote
-    let upvoteBtn = $("<button class='reviewUpvote btn btn-sm btn-success'>");
-    let downvoteBtn = $("<button class='mx-1 reviewDownvote btn btn-sm btn-danger'>");
-    
-    upvoteBtn.text("👍 Useful");
-    downvoteBtn.text("👎 Disagree");
+    let upvoteBtn = $(`<button class='reviewUpvote btn btn-sm btn-success' id='review-upvote' data-review='${review.id}' data-value-upvotes='${review.upvotes}'>`);
+    let downvoteBtn = $(`<button class='mx-1 reviewDownvote btn btn-sm btn-danger' id='review-downvote' data-review='${review.id}'
+    data-value-downvotes='${review.downvotes}'>`);
+    upvoteBtn.text("👍Useful");
+    const badgeUpvote = $("<span class='badge badge-light ml-2' id='upvotes-reviews'>")
+      .text(`${review.upvotes}`).appendTo(upvoteBtn);
+
+    downvoteBtn.text("👎Disagree");
+    const badgeDownvote = $("<span class='badge badge-light ml-2' id='downvotes-reviews'>")
+      .text(`${review.downvotes}`).appendTo(downvoteBtn);
     // append buttons to $colDesc
     $colDesc
       .append(upvoteBtn)
@@ -107,11 +112,16 @@ $(document).ready(() => {
         const $rowBody = $("<div class='row d-flex w-100 text-muted border-0'>");
         const $ptext = $("<p class='col-12'>").text(comment.description).appendTo($rowBody);
 
-        let upvoteBtn = $("<button class='commentUpvote btn btn-sm btn-success'>");
-        let downvoteBtn = $("<button class='mx-1 commentDownvote btn btn-sm btn-danger'>");
+        let upvoteBtn = $(`<button class='commentUpvote btn btn-sm btn-success' id='comment-upvote' data-comment='${comment.id}' data-value-upvotes='${comment.upvotes}'>`);
+        let downvoteBtn = $(`<button class='mx-1 commentDownvote btn btn-sm btn-danger' id='comment-downvote' data-comment='${comment.id}'  data-value-downvotes='${comment.downvotes}'>`);
 
-        upvoteBtn.text("👍 Useful");
-        downvoteBtn.text("👎 Disagree");
+        upvoteBtn.text("👍Useful");
+        const badgeUpvote = $("<span class='badge badge-light ml-2' id='upvotes-comments'>")
+          .text(`${comment.upvotes}`).appendTo(upvoteBtn);
+
+        downvoteBtn.text("👎Disagree");
+        const badgeDownvote = $("<span class='badge badge-light ml-2' id='downvotes-comments'>")
+          .text(`${comment.downvotes}`).appendTo(downvoteBtn);
         //
         $rowComment.append($rowInfos, $rowBody)
         //
@@ -254,7 +264,7 @@ $(document).ready(() => {
       //enable button to let user reviews, comments and photo
       $("#add-review").prop("disabled", false);
       $("#add-photo").prop("disabled", false);
-        //disabled button login 
+      //disabled button login 
       $("#login").css("display", "none");
       $("#profileDropdown").removeClass("invisible");
     }
@@ -396,4 +406,105 @@ $(document).ready(() => {
       });
   });
 
+  //event listener for click on upvote review
+  //review-upvote
+  $(document).on("click", "#review-upvote", function () {
+    //get the values back from the data ()
+    const reviewUpvoteId = $(this).attr("data-review");
+    const reviewUpvoteValue = $(this).attr("data-value-upvotes");
+    console.log(reviewUpvoteId);
+    console.log(reviewUpvoteValue);
+    const newValue = parseInt(reviewUpvoteValue) + 1;
+    console.log(newValue);
+    //ajax call to update the db
+    const upvoteData = {
+      upvotes: newValue
+    };
+    $.ajax({
+      url: "/api/reviews/"+reviewUpvoteId,
+      method: "put",
+      data: upvoteData
+    }).then(result => {
+      console.log(result);
+      location.reload();
+    }).catch(err => {
+      console.log(err);
+    });
+
+  });
+  //event listener for click on downvote review
+  $(document).on("click", "#review-downvote", function () {
+    //get the values back from the data ()
+    const reviewDownvoteId = $(this).attr("data-review");
+    const reviewDownvoteValue = $(this).attr("data-value-downvotes");
+    console.log(reviewDownvoteId);
+    console.log(reviewDownvoteValue);
+    const newValue = parseInt(reviewDownvoteValue) + 1;
+    console.log(newValue);
+    //ajax call to update the db
+    const downvoteData = {
+      downvotes: newValue
+    };
+    $.ajax({
+      url: "/api/reviews/"+reviewDownvoteId,
+      method: "put",
+      data: downvoteData
+    }).then(result => {
+      console.log(result);
+      location.reload();
+    }).catch(err => {
+      console.log(err);
+    });
+
+  });
+  //event listener for click on upvote comment
+  $(document).on("click", "#comment-upvote", function () {
+    //get the values back from the data ()
+    const commentUpvoteId = $(this).attr("data-comment");
+    const commentUpvoteValue = $(this).attr("data-value-upvotes");
+    console.log(commentUpvoteId);
+    console.log(commentUpvoteValue);
+    const newValue = parseInt(commentUpvoteValue) + 1;
+    console.log(newValue);
+    //ajax call to update the db
+    const upvoteData = {
+      upvotes: newValue
+    };
+    $.ajax({
+      url: "/api/comments/"+commentUpvoteId,
+      method: "put",
+      data: upvoteData
+    }).then(result => {
+      console.log(result);
+      location.reload();
+    }).catch(err => {
+      console.log(err);
+    });
+
+  });
+  //event listener for click on downvote comment
+  $(document).on("click", "#comment-downvote", function () {
+    //get the values back from the data ()
+    const commentDownvoteId = $(this).attr("data-comment");
+    const commentDownvoteValue = $(this).attr("data-value-downvotes");
+    console.log(commentDownvoteId);
+    console.log(commentDownvoteValue);
+    const newValue = parseInt(commentDownvoteValue) + 1;
+    console.log(newValue);
+    //ajax call to update the db
+    const downvoteData = {
+      downvotes: newValue
+    };
+    $.ajax({
+      url: "/api/comments/"+commentDownvoteId,
+      method: "put",
+      data: downvoteData
+    }).then(result => {
+      console.log(result);
+      location.reload();
+    }).catch(err => {
+      console.log(err);
+    });
+
+  });
 });

@@ -17,6 +17,7 @@ $(document).ready(() => {
 
   //function to build reviews in form of accordion
   const showPlaceReviews = (review, index) => {
+    $("#reviews").removeClass("invisible");
     //build the card
     const $card = $("<card>");
     //the header
@@ -47,17 +48,19 @@ $(document).ready(() => {
     const $cardBody = $("<div class='card-body'>");
     //row => col-10 for the author and date
     const $firstRow = $("<div class='row'>");
-    const $colAuthor = $("<div class='col-10'>");
-    const $colAuthorText = $("<h4>").text(`Reviewed by: ${review.UserId} 
-On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($colAuthor);
+    const $colAuthor = $("<div class='col-3'>");
+    const $colAuthorText = $("<h4 style='font-weight: bold' class='mr-2'>").text(`Reviewed by: ${review.User.userName}`).appendTo($colAuthor);
+
+    const $colDate = $("<div class='col-7'>");
+    const $colDateText = $("<h4 style='font-weight: bold'>").text(`On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($colDate);
 
     const $colComment = $("<div class='col-2'>");
-    const $colCommentText = $(`<button class='comments btn btn-primary' data-review='${review.id}' data-toggle='modal' data-target='#comment-modal'>`)
+    const $colCommentText = $(`<button class='comments btn btn-primary' data-review='${review.id}' data-toggle='modal' data-target='#comment-modal' id='add-comment'>`)
       .text("Comments: ").appendTo($colComment);
     const $colCommentNumber = $("<span class='badge badge-light' id='num-comments'>")
       .text(`${review.Comments.length}`).appendTo($colCommentText);
 
-    $firstRow.append($colAuthor, $colComment);
+    $firstRow.append($colAuthor, $colDate, $colComment);
 
 
     // row =>=> col-12 => span  for the description 
@@ -82,7 +85,7 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
         //build the 
         const $rowComment = $("<div class='list-group-item list-group-item-action flex-column align-items-start my-2'>");
         const $rowInfos = $("<div class='row d-flex w-100 justify-content-start text-muted'>");
-        const $colUsername = $("<div class='col-3' style='font-weight: bold'>").text(`Posted by: ${comment.UserId}`).appendTo($rowInfos);
+        const $colUsername = $("<div class='col-3' style='font-weight: bold'>").text(`Posted by:  ${comment.User.userName}`).appendTo($rowInfos);
         const $colCreatedAt = $("<div class='col-9' style='font-weight: bold'>").text(`On: ${moment(comment.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($rowInfos);
         const $rowBody = $("<div class='row d-flex w-100 justify-content-between text-muted border-0'>");
         const $ptext = $("<div class='col-12'>").text(comment.description).appendTo($rowBody);
@@ -119,9 +122,9 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
       //create the list item
       //if it is the first image add class active
       const carouselListItem = $(`<li data-target='#picture-carousel'data-slide-to='${index}'>`);
-     /*  if (index === 0) {
-        carouselListItem.addClass("active");
-      } */
+      /*  if (index === 0) {
+         carouselListItem.addClass("active");
+       } */
       //append li to the ol
       carouselListItem.appendTo(carouselList);
     });
@@ -190,21 +193,21 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
     } else {
       alert("Be the first to leave a review");
       //then its a new place that we will create in our database
-      $("#add-review").on("click", () => {
-        //create the place in the db
-        $.ajax({
-          method: "POST",
-          url: "/api/places",
-          data: placeData
-        }).then(result => {
-          //console.log(result);
-          showPlaceinfos(result);
-          //get the value of placeID
-          placeId = (result.id);
-        }).catch(err => {
-          console.log(err);
-        });
-      })
+      //$("#add-review").on("click", () => {
+      //create the place in the db
+      $.ajax({
+        method: "POST",
+        url: "/api/places",
+        data: placeData
+      }).then(result => {
+        console.log(result);
+        showPlaceinfos(result);
+        //get the value of placeID
+        placeId = (result.id);
+      }).catch(err => {
+        console.log(err);
+      });
+      // })
     }
   }).catch(err => {
     console.log(err);
@@ -223,14 +226,13 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
       //enable button to let user reviews, comments and photo
       $("#add-review").prop("disabled", false);
       $("#add-photo").prop("disabled", false);
-
-      //disabled button login 
+        //disabled button login 
       $("#login").css("display", "none");
       $("#profileDropdown").removeClass("invisible");
-    } 
+    }
   });
-  
-  
+
+
   //event listener for a click on save on the modal
   $("#save-review").on("click", (event) => {
     //prvent page to reload
@@ -364,4 +366,5 @@ On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).append
         location.reload();
       });
   });
+
 });

@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-
+  //event listener for log out
   $.ajax({
     url: "api/users/status",
     method: "GET"
@@ -10,15 +9,15 @@ $(document).ready(function () {
     if (userConnected) {
       var userUpdatedId = userConnected.id;
       // if user connected then show profile stuff else show login button
-      
-    } 
+
+    }
 
     console.log("here");
 
     console.log(userUpdatedId);
 
 
-    $("#saveAccountBtn").on("click", function () {
+    $("#saveAccountBtn").on("click", function (event) {
       event.preventDefault();
 
       const bioUpdate = {
@@ -33,7 +32,7 @@ $(document).ready(function () {
         data: bioUpdate
       }).then(updatedResult => {
         console.log(updatedResult);
-        
+
       })
 
       $("#accountBio").val("");
@@ -59,7 +58,7 @@ $(document).ready(function () {
 
 
     //make button for upload pic functional
-    
+
 
 
 

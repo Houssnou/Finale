@@ -462,10 +462,8 @@ $(document).ready(() => {
     //get the values back from the data ()
     const commentUpvoteId = $(this).attr("data-comment");
     const commentUpvoteValue = $(this).attr("data-value-upvotes");
-    console.log(commentUpvoteId);
-    console.log(commentUpvoteValue);
     const newValue = parseInt(commentUpvoteValue) + 1;
-    console.log(newValue);
+   
     //ajax call to update the db
     const upvoteData = {
       upvotes: newValue

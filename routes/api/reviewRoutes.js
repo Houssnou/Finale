@@ -21,6 +21,7 @@ router
 router
 .route("/:id")
 .get(reviewController.SelectReview)
+.put(reviewController.updateReview)
 .delete(reviewController.deleteReview);
 
 

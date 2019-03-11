@@ -12,9 +12,10 @@ router
 .route("/:reviewId")
 .get(CommentController.getAllCommentsByReview);
 
-//method for /api/placeId
+//method for /api/comments
 router
 .route("/:id")
+.put(CommentController.updateComment)
 .delete(CommentController.deleteComment);
 
 //method for /api/comments/user/:userId

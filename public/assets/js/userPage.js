@@ -8,7 +8,6 @@ $(document).ready(function () {
   }).then(userConnected => {
     var userId = userConnected.id;
     if (userConnected) {
-
       //disabled button login 
       $("#login").css("display", "none");
       $("#profileDropdown").removeClass("invisible");

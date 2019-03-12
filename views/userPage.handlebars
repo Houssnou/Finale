@@ -11,6 +11,24 @@
         <a class="btn btn-primary" href="/mapbox">🔍 Search for more places</a>
       </li>
     </ul>
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a class="btn btn-primary btn-lg" href="./user" id="login"> login</a>
+      </li>
+      <li class="nav-item dropdown invisible" id="profileDropdown">
+
+        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          
+          <img class="rounded-circle" id="user-avatar"> Profile </a>
+        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+          {{!-- MODAL LINKS --}}
+          <a class="dropdown-item" href="/userPage"><i class="fas fa-history"></i>User history</a>
+          <a class="dropdown-item" href="./api/users/logout" id="logout"><i class="fas fa-sign-out-alt"></i>Log out</a>
+        </div>
+
+      </li>
+    </ul>
   </div>
 </nav>
 {{!-- NAVBAR END --}}

@@ -54,11 +54,11 @@ $(document).ready(() => {
     const $cardBody = $("<div class='card-body'>");
     //row => col-10 for the author and date
     const $firstRow = $("<div class='row'>");
-    const $colAuthor = $("<div class='col-3'>");
-    const $colAuthorText = $("<h4 style='font-weight: bold' class='mr-2'>").text(`Reviewed by: ${review.User.userName}`).appendTo($colAuthor);
+    const $colAuthor = $("<div class='col-4'>");
+    const $colAuthorText = $("<h5 style='font-weight: bold' class='mr-1'>").text(`Reviewed by: ${review.User.userName}`).appendTo($colAuthor);
 
-    const $colDate = $("<div class='col-7'>");
-    const $colDateText = $("<h4 style='font-weight: bold'>").text(`On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($colDate);
+    const $colDate = $("<div class='col-6'>");
+    const $colDateText = $("<h5 style='font-weight: bold'>").text(`On: ${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`).appendTo($colDate);
 
     const $colComment = $("<div class='col-2'>");
     const $colCommentText = $(`<button class='comments btn btn-primary' data-review='${review.id}' data-toggle='modal' data-target='#comment-modal' id='add-comment'>`)

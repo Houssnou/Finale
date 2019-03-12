@@ -18,12 +18,13 @@ $(document).ready(function () {
       url: "/api/users/" + userId,
       method: "GET"
     }).then(userInfo => {
-      
+      console.log(`userinfo here`)
+       console.log(userInfo)
       $("#user-avatar")
         .attr("src", userInfo.photo)
         .attr("alt", "user avatar")
       $(".userPagePic")
-        .attr("src", userConnected.photo)
+        .attr("src", userInfo.photo)
         .attr("alt", "profile page pic");
     });
 

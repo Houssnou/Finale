@@ -8,7 +8,6 @@ $(document).ready(function () {
   }).then(userConnected => {
     var userId = userConnected.id;
     if (userConnected) {
-
       //disabled button login 
       $("#login").css("display", "none");
       $("#profileDropdown").removeClass("invisible");
@@ -32,9 +31,6 @@ $(document).ready(function () {
       url: "/api/reviews/user/" + userId,
       method: "GET"
     }).then(userReviews => {
-      console.log(`list of reviews`);
-      console.log(userReviews);
-
       // get page information(description, #of reviews, and review merit score) of user page session
       $("#userPageGreeting").text(`Welcome ${userConnected.userName},`);
       $("#userPageJumbotronText").text("This is where you can see your review and comment history of the places you've visited. You can even see you own user stats here!");
@@ -42,27 +38,25 @@ $(document).ready(function () {
       $("#profilePageDesc").append(userConnected.description);
       $("#numberOfReviews").append(userReviews.length);
 
-
-
       //dynamically make a card list
       // for each review, dymanically make a card per review
       userReviews.forEach(review => {
-        console.log(review.Place.name);
+        //console.log(review.Place.name);
         const $userReviewsListDiv = $("#userReviewsList");
-        const reviewsCard = $("<div class='card'>");
+        const reviewsCard = $("<div class='card my-2'>");
         const reviewsCardHeaderContainer = $("<div class='container-fluid'>");
         const reviewsCardHeader = $("<div class='row card-header'>");
         const reviewsHeaderCol1 = $("<div class='col d-flex justify-content-start'>");
         const reviewsLocation = $("<h5>").text(review.Place.name);
         const reviewsHeaderCol2 = $("<div class='col d-flex justify-content-end'>");
-        const reviewsDate = $("<h5>").text(review.createdAt);
+        const reviewsDate = $("<h5>").text(`${moment(review.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`);
 
         const reviewsCardBody = $("<div class='card-body'>");
         const cardBodyRow = $("<div class='row'>");
         const cardBodyCol1 = $("<div class='col d-flex justify-content-start'>");
         const cardBodyTitle = $("<h5 class='card-title'>").text(review.title);
         const cardBodyCol2 = $("<div class='col d-flex justify-content-end'>");
-        const cardVoteScore = $("<div>").text("Upvotes: 1 | Downvotes: 0");
+        const cardVoteScore = $("<div>").text(`Upvotes: ${review.upvotes} | Downvotes: ${review.downvotes}`);
         const reviewsDescription = $("<p class='card-text'>").text(review.description);
 
         // append everything to reviewslist
@@ -100,26 +94,23 @@ $(document).ready(function () {
       url: "/api/comments/user/" + userId,
       method: "GET"
     }).then(userComments => {
-      console.log(`these  r ur comments api list`);
-      console.log(userComments);
-
       // now make another forEach loop boi
       userComments.forEach(comment => {
         // here comes a call of variables
         const $userCommentsListDiv = $("#userCommentsList");
-        const userCommentsCard = $("<div class='card'>");
+        const userCommentsCard = $("<div class='card my-2'>");
         const commentsHeaderContainer = $("<div class='container-fluid'>");
         const userCommentsHeader = $("<div class='row card-header'>");
         const commentHeaderCol1 = $("<div class='col d-flex justify-content-start'>");
         const commentFromReview = $("<h5 class='card-title'>").text(`Commented from: ${comment.Review.title}`);
         const commentHeaderCol2 = $("<div class='col d-flex justify-content-end'>");
-        const commentDate = $("<h5>").text(comment.createdAt);
+        const commentDate = $("<h5>").text(`${moment(comment.createdAt).format("dddd, MMMM Do YYYY, h:mm:ss a")}`);
 
         const commentCardBody = $("<div class='card-body'>");
         const commentBodyRow = $("<div class='row'>");
         const commentBodyCol1 = $("<div class='col d-flex justify-content-start'>");
         const commentBodyCol2 = $("<div class='col d-flex justify-content-end'>");
-        const cardVoteScore = $("<div>").text("Upvotes: 1 | Downvotes: 0");
+        const cardVoteScore = $("<div>").text(`Upvotes: ${comment.upvotes} | Downvotes: ${comment.downvotes}`);
         const commentDescription = $("<p class='card-text'>").text(comment.description);
 
 

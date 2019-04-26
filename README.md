@@ -1,4 +1,4 @@
-Review It, a simple site allowing user to leave reviews on their local places.
+Review It, a simple site allowing user to leave reviews on their local places using MApxBox API for geo-location.
 
 This is a Node, Express, MySQL and express-handlebars powered application.
 
